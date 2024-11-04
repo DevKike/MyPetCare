@@ -1,3 +1,9 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
+  <app-tabs [tabs]="[
+  { name: 'home', title: 'Home', icon: 'home', route: 'home' },
+  { name: 'My Pets', title: 'My Pets', icon: 'paw', route: 'my-pets' },
+  { name: 'Reminder', title: 'Reminders', icon: 'alarm', route: 'reminders' },
+  { name: 'search', title: 'Search', icon: 'search', route: 'search' }
+]" ></app-tabs>
 </ion-app>

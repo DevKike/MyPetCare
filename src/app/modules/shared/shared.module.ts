@@ -3,10 +3,14 @@ import { CommonModule } from '@angular/common';
 import { StorageService } from './services/storage/storage.service';
 import { IonicModule } from '@ionic/angular';
 import { ButtonComponent } from './components/button/button.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { RouterModule } from '@angular/router';
 
-const MODULES = [CommonModule, IonicModule];
 
-const COMPONENTS = [ButtonComponent];
+const MODULES = [CommonModule, IonicModule, RouterModule];
+
+const COMPONENTS = [TabsComponent, ButtonComponent];
+
 
 const PROVIDERS = [StorageService];
 
