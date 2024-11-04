@@ -2,29 +2,40 @@ import { Injectable } from '@angular/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalNotificationsService {
-
   constructor() {
     this.initialize();
-   }
+  }
 
-   async initialize() {
-
+  async initialize() {
     await LocalNotifications.requestPermissions();
   }
 
-  async scheduleNotification(title: string, body: string, id: number) {
+  async scheduleNotification(
+    id: number,
+    title: string,
+    body: string,
+    largeBody: string,
+    summaryText: string,
+    largeIcon: string,
+    smallIcon: string,
+  ) {
     await LocalNotifications.schedule({
       notifications: [
         {
+          id: id,
           title: title,
           body: body,
-          id: id,
+          largeBody: largeBody,
+          summaryText: summaryText,
+          largeIcon: largeIcon,
+          smallIcon: smallIcon,
+          
 
-        }
-      ]
+        },
+      ],
     });
   }
 
