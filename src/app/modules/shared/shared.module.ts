@@ -6,11 +6,13 @@ import { ButtonComponent } from './components/button/button.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
+import { CardModalComponent } from './components/card-modal/card-modal.component';
 
 
 const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule];
 
-const COMPONENTS = [TabsComponent, ButtonComponent];
+const COMPONENTS = [TabsComponent, ButtonComponent, SheetModalComponent, CardModalComponent];
 
 
 const PROVIDERS = [StorageService];
