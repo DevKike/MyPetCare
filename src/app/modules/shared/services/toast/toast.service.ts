@@ -12,6 +12,6 @@ export class ToastService {
       text: message,
       duration: duration,
       position: position
-    });
+    });   
   }
 }
