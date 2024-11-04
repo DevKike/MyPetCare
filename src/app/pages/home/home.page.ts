@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD:src/app/home/home.page.ts
-import { LocalNotificationsService } from '../modules/shared/services/localNotifications/local-notifications.service';
-import { ToastService } from '../modules/shared/services/toast/toast.service';
-
-=======
 import { LocalNotificationsService } from 'src/app/modules/shared/services/localNotifications/local-notifications.service';
->>>>>>> ca6971d89ed91b3f9c9f8854785f2eeedac52cf0:src/app/pages/home/home.page.ts
+import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',

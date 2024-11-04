@@ -5,9 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { ButtonComponent } from './components/button/button.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
-const MODULES = [CommonModule, IonicModule, RouterModule];
+const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule];
 
 const COMPONENTS = [TabsComponent, ButtonComponent];
 
