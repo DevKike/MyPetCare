@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { LocalNotificationsService } from '../modules/shared/services/localNotifications/local-notifications.service';
-
+import { LocalNotificationsService } from 'src/app/modules/shared/services/localNotifications/local-notifications.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -12,9 +11,14 @@ export class HomePage {
 
   scheduleNotification() {
     this._localNotificationSrv.scheduleNotification(
+      1,
       'Notificación de Prueba',
       'Esta es una notificación programada',
-      1
+      'Get 30% discounts on own Application',
+      'Exciting offers!!',
+      'res://drawable/logo_64',
+      'res://drawable/huella_48',
+
     ).then(() => {
       console.log('Notificación programada');
     }).catch(error => {
