@@ -11,6 +11,7 @@ import { CardModalComponent } from './components/card-modal/card-modal.component
 import { HeaderComponent } from './components/header/header.component';
 import { RefresherComponent } from './components/refresher/refresher.component';
 import { InputComponent } from './components/input/input.component';
+import { SegmentComponent } from './components/segment/segment.component';
 
 const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule];
 
@@ -21,7 +22,8 @@ const COMPONENTS = [
   CardModalComponent,
   HeaderComponent,
   RefresherComponent,
-  InputComponent
+  InputComponent,
+  SegmentComponent
 ];
 
 const PROVIDERS = [StorageService];
