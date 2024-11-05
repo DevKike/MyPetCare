@@ -10,11 +10,19 @@ import { SheetModalComponent } from './components/sheet-modal/sheet-modal.compon
 import { CardModalComponent } from './components/card-modal/card-modal.component';
 import { HeaderComponent } from './components/header/header.component';
 import { RefresherComponent } from './components/refresher/refresher.component';
-
+import { InputComponent } from './components/input/input.component';
 
 const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule];
 
-const COMPONENTS = [TabsComponent, ButtonComponent, SheetModalComponent, CardModalComponent, HeaderComponent, RefresherComponent];
+const COMPONENTS = [
+  TabsComponent,
+  ButtonComponent,
+  SheetModalComponent,
+  CardModalComponent,
+  HeaderComponent,
+  RefresherComponent,
+  InputComponent
+];
 
 const PROVIDERS = [StorageService];
 
