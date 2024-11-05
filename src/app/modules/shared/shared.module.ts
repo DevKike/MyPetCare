@@ -9,12 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
 import { CardModalComponent } from './components/card-modal/card-modal.component';
 import { HeaderComponent } from './components/header/header.component';
+import { RefresherComponent } from './components/refresher/refresher.component';
 
 
 const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule];
 
-const COMPONENTS = [TabsComponent, ButtonComponent, SheetModalComponent, CardModalComponent, HeaderComponent];
-
+const COMPONENTS = [TabsComponent, ButtonComponent, SheetModalComponent, CardModalComponent, HeaderComponent, RefresherComponent];
 
 const PROVIDERS = [StorageService];
 
