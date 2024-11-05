@@ -5,8 +5,23 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss'],
 })
-export class SearchBarComponent  implements OnInit {
-  ngOnInit() {}
+export class SearchBarComponent implements OnInit {
+  private data = [];
 
-  constructor() {}
+  protected results = [...this.data];
+
+  ngOnInit(): void {
+    // this.results = this.data.sort((a, b) => a.localeCompare(b));
+  }
+
+  protected handleInput(event: any) {
+    /* const query = event.target.value.toLowerCase();
+    this.results = this.data
+      .filter((d) => d.toLowerCase().includes(query))
+      .sort((a, b) => a.localeCompare(b)); */
+  }
+
+  protected handleItemClick(item: string) {
+    console.log(item);
+  }
 }

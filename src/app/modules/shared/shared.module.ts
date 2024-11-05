@@ -13,6 +13,7 @@ import { RefresherComponent } from './components/refresher/refresher.component';
 import { InputComponent } from './components/input/input.component';
 import { SegmentComponent } from './components/segment/segment.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { ListComponent } from './components/list/list.component';
 
 const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule];
 
@@ -26,6 +27,7 @@ const COMPONENTS = [
   InputComponent,
   SegmentComponent,
   SearchBarComponent,
+  ListComponent,
 ];
 
 const PROVIDERS = [StorageService];
