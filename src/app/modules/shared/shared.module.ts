@@ -14,6 +14,12 @@ import { InputComponent } from './components/input/input.component';
 import { SegmentComponent } from './components/segment/segment.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ListComponent } from './components/list/list.component';
+import { AuthService } from './services/auth/auth.service';
+import { FirestoreService } from './services/firestore/firestore.service';
+import { LoadingService } from './services/loading/loading.service';
+import { LocalNotificationsService } from './services/localNotifications/local-notifications.service';
+import { LocalStorageService } from './services/localStorage/local-storage.service';
+import { ToastService } from './services/toast/toast.service';
 
 const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule];
 
@@ -30,7 +36,15 @@ const COMPONENTS = [
   ListComponent,
 ];
 
-const PROVIDERS = [StorageService];
+const PROVIDERS = [
+  StorageService,
+  AuthService,
+  FirestoreService,
+  LoadingService,
+  LocalNotificationsService,
+  LocalStorageService,
+  ToastService,
+];
 
 @NgModule({
   declarations: [...COMPONENTS],
