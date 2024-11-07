@@ -1,3 +1,3 @@
 export enum FirestoreCollection {
-    USERS = 'users',
+  USERS = 'users',
 }
