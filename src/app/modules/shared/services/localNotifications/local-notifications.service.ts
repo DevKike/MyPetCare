@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,19 @@ export class LocalNotificationsService {
   }
 
   async initialize() {
-    await LocalNotifications.requestPermissions();
+    const permission = await LocalNotifications.requestPermissions();
+
+    await Preferences.set({
+      key: 'notificationPermission',
+      value: permission.display === 'granted' ? 'true' : 'false',
+    });
+
+
+  }
+
+  async checkNotificationPermission(): Promise<boolean> {
+    const { value } = await Preferences.get({ key: 'notificationPermission' });
+    return value === 'true';
   }
 
   async scheduleNotification(
@@ -20,7 +33,7 @@ export class LocalNotificationsService {
     largeBody: string,
     summaryText: string,
     largeIcon: string,
-    smallIcon: string,
+    smallIcon: string
   ) {
     await LocalNotifications.schedule({
       notifications: [
@@ -32,8 +45,6 @@ export class LocalNotificationsService {
           summaryText: summaryText,
           largeIcon: largeIcon,
           smallIcon: smallIcon,
-          
-
         },
       ],
     });
