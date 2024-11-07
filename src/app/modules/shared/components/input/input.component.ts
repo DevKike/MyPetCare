@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { InputType } from 'src/app/types/InputType';
 
 @Component({
@@ -15,6 +16,7 @@ export class InputComponent {
   @Input() errorText!: string;
   @Input() model: any;
   @Input() isEmail: boolean = false;
+  @Input() control!: FormControl
 
   constructor() {}
 }

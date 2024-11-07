@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { ButtonComponent } from './components/button/button.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SheetModalComponent } from './components/sheet-modal/sheet-modal.component';
 import { CardModalComponent } from './components/card-modal/card-modal.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -21,7 +21,7 @@ import { LocalNotificationsService } from './services/localNotifications/local-n
 import { LocalStorageService } from './services/localStorage/local-storage.service';
 import { ToastService } from './services/toast/toast.service';
 
-const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule];
+const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule, ReactiveFormsModule];
 
 const COMPONENTS = [
   TabsComponent,
