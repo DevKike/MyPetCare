@@ -20,8 +20,15 @@ import { LoadingService } from './services/loading/loading.service';
 import { LocalNotificationsService } from './services/localNotifications/local-notifications.service';
 import { LocalStorageService } from './services/localStorage/local-storage.service';
 import { ToastService } from './services/toast/toast.service';
+import { ThumbnailComponent } from './thumbnail/thumbnail.component';
 
-const MODULES = [CommonModule, IonicModule, RouterModule, FormsModule, ReactiveFormsModule];
+const MODULES = [
+  CommonModule,
+  IonicModule,
+  RouterModule,
+  FormsModule,
+  ReactiveFormsModule,
+];
 
 const COMPONENTS = [
   TabsComponent,
@@ -34,6 +41,7 @@ const COMPONENTS = [
   SegmentComponent,
   SearchBarComponent,
   ListComponent,
+  ThumbnailComponent,
 ];
 
 const PROVIDERS = [
