@@ -1,0 +1,5 @@
+<ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)"></ion-searchbar>
+
+@for (result of results; track $index) { 
+    <app-list [label]="result" [isClickable]="true" (itemClick)="handleItemClick($event)"></app-list>
+}
