@@ -6,7 +6,7 @@ export interface IUser {
   phoneNumber: number;
   email: string;
   password: string;
-  image: string;
+  image?: string;
 }
 
 export interface ICreateUser extends Omit<IUser, 'id' | 'email' | 'password'> {}
