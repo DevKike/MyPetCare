@@ -16,7 +16,11 @@ export class InputComponent {
   @Input() errorText!: string;
   @Input() model: any;
   @Input() isEmail: boolean = false;
-  @Input() control!: FormControl
+  @Input() control!: FormControl;
 
   constructor() {}
+
+  public keyUp(event: any) {
+    this.control.setValue(event.target.value);
+  }
 }

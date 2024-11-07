@@ -1,11 +1,13 @@
 <ion-list>
   <ion-item>
-    <ion-input class="input"
+    <ion-input
+      class="input"
       [type]="type"
       fill="solid"
       [label]="label"
       label-placement="floating"
       [placeholder]="placeHolder"
+      (keyup)="keyUp($event)"
     ></ion-input>
   </ion-item>
 </ion-list>
