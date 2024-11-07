@@ -1,1 +1,1 @@
-export type InputType = "decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined;
+export type InputType = "date" | "datetime-local" | "email" | "month" | "number" | "password" | "search" | "tel" | "text" | "time" | "url" | "week"; 
