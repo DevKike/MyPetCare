@@ -18,11 +18,24 @@ ion-content.custom-background {
 
 .title {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-size: 30px; 
+  font-size: 30px;
   align-items: flex-end;
 }
 
 .p {
   font-family: Arial, Helvetica, sans-serif;
-  margin-top: 8px; 
+  margin-top: 8px;
+}
+
+.scale-up-center {
+  animation: scale-up-center 1s;
+}
+
+@keyframes scale-up-center {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

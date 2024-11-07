@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalNotificationsService } from 'src/app/modules/shared/services/localNotifications/local-notifications.service';
 import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
 @Component({
@@ -6,9 +6,13 @@ import { ToastService } from 'src/app/modules/shared/services/toast/toast.servic
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  animate = false;
 
   constructor(private readonly _localNotificationSrv: LocalNotificationsService, private readonly _toastSrv: ToastService) {}
+  ngOnInit() {
+    this.animate = true;
+  }
 
   scheduleNotification() {
     this._localNotificationSrv.scheduleNotification(

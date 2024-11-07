@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'reminders',
     loadChildren: () => import('./pages/reminders/reminders.module').then( m => m.RemindersPageModule)
   },
+  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
 
 
 ];

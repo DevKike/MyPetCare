@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { paw, home, alarm, search } from 'ionicons/icons';
+import { paw, home, alarm, search, settings } from 'ionicons/icons';
 
 interface Tab {
   name: string;
@@ -18,7 +18,7 @@ export class TabsComponent   {
 
   constructor() {
 
-    addIcons({ paw, home, alarm, search });
+    addIcons({ paw, home, alarm, search, settings });
   }
 
 
