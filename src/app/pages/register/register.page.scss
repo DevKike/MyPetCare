@@ -1,0 +1,60 @@
+.image-upload-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  .image-preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border: 2px solid var(--ion-color-medium);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    ion-button {
+      --background: rgba(0, 0, 0, 0.5);
+      --border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+    }
+  }
+}
+
+.header-dark {
+  --background: #1e1e1e;
+  --color: #ffffff;
+  ion-title {
+    font-weight: bold;
+    font-size: 1.4rem;
+  }
+}
+
+.content-dark {
+  --background: #121212;
+}
+
+.form-container-dark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  max-width: 400px;
+  margin: 2rem auto 0;
+  background-color: #1c1c1c;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1.5rem;
+}

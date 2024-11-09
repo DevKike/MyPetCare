@@ -5,9 +5,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <app-tabs [tabs]="[
+  { name: 'home', title: 'Home', icon: 'home', route: 'home' },
+  { name: 'myPets', title: 'My Pets', icon: 'paw', route: 'my-pets' },
+  { name: 'reminder', title: 'Reminders', icon: 'alarm', route: 'reminders' },
+  { name: 'settings', title: 'Settings', icon: 'settings', route: 'settings' }
+]"></app-tabs>
+  <app-button routerLink="/register" label="registrate"></app-button>
+
+
 </ion-content>
