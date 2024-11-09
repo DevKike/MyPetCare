@@ -7,15 +7,15 @@ import { NavController } from '@ionic/angular';
 export class NavigationService {
   constructor(private readonly _navCtrl: NavController) {}
 
-  public navigateTo(url: string) {
-    this._navCtrl.navigateForward(url);
+  public async navigateTo(url: string) {
+    await this._navCtrl.navigateForward(url);
   }
 
-  public navigateBack(url: string) {
-    this._navCtrl.navigateBack(url);
+  public async navigateBack(url: string) {
+    await this._navCtrl.navigateBack(url);
   }
 
-  public navigateRoot(url: string) {
-    this._navCtrl.navigateRoot(url);
+  public async navigateRoot(url: string) {
+    await this._navCtrl.navigateRoot(url);
   }
 }

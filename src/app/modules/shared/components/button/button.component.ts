@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { ButtonColor, ButtonFill, ButtonType } from 'src/app/types/Button';
 import { NavigationService } from '../../services/navigation/navigation.service';
 
@@ -21,9 +20,9 @@ export class ButtonComponent {
 
   constructor(private readonly _navSrv: NavigationService) {}
 
-  public navigate() {
+  public async navigate() {
     if (this.ref) {
-      this._navSrv.navigateTo(this.ref);
+      await this._navSrv.navigateTo(this.ref);
     }
   }
 }
