@@ -4,6 +4,11 @@ import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
 import { IAuthUser, ICreateUser } from 'src/app/interfaces/IUser';
 import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
+import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
+import { LocalNotificationsService } from 'src/app/modules/shared/services/localNotifications/local-notifications.service';
+import { StorageService } from 'src/app/modules/shared/services/storage/storage.service';
+import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
+import { __await } from 'tslib';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +31,11 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private readonly _firestoreSrv: FirestoreService,
-    private readonly _authSrv: AuthService
+    private readonly _authSrv: AuthService,
+    private readonly _loadingSrv: LoadingService,
+    private readonly _storageSrv: StorageService,
+    private readonly _toastSrv: ToastService,
+    private readonly _localNotificationsSrv: LocalNotificationsService
   ) {}
 
   ngOnInit() {
@@ -35,6 +44,7 @@ export class RegisterPage implements OnInit {
 
   protected async doRegister() {
     try {
+      await this._loadingSrv.showLoading('Registering...');
       const authUser: IAuthUser = {
         email: this.registerForm.value.email,
         password: this.registerForm.value.password,
@@ -45,7 +55,7 @@ export class RegisterPage implements OnInit {
         lastName: this.registerForm.value.lastName,
         age: this.registerForm.value.age,
         phoneNumber: this.registerForm.value.phoneNumber,
-        imageUrl: this.registerForm.value.imageUrl,
+        /* imageUrl: this.registerForm.value.imageUrl, */
       };
 
       const res = await this._authSrv.register(
@@ -59,6 +69,23 @@ export class RegisterPage implements OnInit {
         userData,
         userId
       );
+      await this._loadingSrv.hideLoading();
+      this.registerForm.reset();
+
+      const hasPermission =
+        await this._localNotificationsSrv.checkNotificationPermission();
+
+      if (hasPermission) {
+        await this._localNotificationsSrv.scheduleNotification(
+          1,
+          'Registro Existoso',
+          'Te has registrado correctamente en la aplicacion',
+          'Bienvenido a nuestra aplicación',
+          '',
+          'res://drawable/logo_64',
+          'res://drawable/huella_48'
+        );
+      }
     } catch (error) {
       throw error;
     }
@@ -78,7 +105,7 @@ export class RegisterPage implements OnInit {
       name: this.name,
       lastName: this.lastName,
       age: this.age,
-      phone_number: this.phoneNumber,
+      phoneNumber: this.phoneNumber,
     });
   }
 }

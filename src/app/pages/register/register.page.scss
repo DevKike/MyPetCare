@@ -51,20 +51,6 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
 }
 
-.input-group {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-  margin-bottom: 1.2rem;
-}
-
-app-input {
-  flex: 1;
-  --placeholder-color: #a0a0a0;
-  --input-background: #2c2c2c;
-  --input-color: #e0e0e0;
-  --input-border-radius: 8px;
-}
 
 .button-container {
   display: flex;
