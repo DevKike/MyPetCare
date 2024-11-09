@@ -38,7 +38,7 @@ export class SignInPage implements OnInit {
         password: this.signInForm.value.password,
       };
 
-      await this._authSrv.login(authUser.email, authUser.password);
+      await this._authSrv.signInWithEmailAndPassword(authUser.email, authUser.password);
       await this._navCtr.navigateForward('/home');
       await this._toastSrv.showToast(ToastMessages.SIGN_IN_WITH_SUCCESS);
     } catch (error: any) {
