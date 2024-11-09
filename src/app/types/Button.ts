@@ -12,3 +12,5 @@ export type ButtonColor =
   | 'dark'
   | 'cool'
   | 'warm';
+
+export type ButtonFill = 'solid' | 'clear' | 'outline';

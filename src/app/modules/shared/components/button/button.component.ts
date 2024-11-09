@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { ButtonColor, ButtonType } from 'src/app/types/Button';
+import { ButtonColor, ButtonFill, ButtonType } from 'src/app/types/Button';
 import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
@@ -17,6 +17,7 @@ export class ButtonComponent {
   @Input() color: ButtonColor = 'primary';
   @Input() expand!: string;
   @Input() shape!: string;
+  @Input() fill: ButtonFill = 'solid';
 
   constructor(private readonly _navSrv: NavigationService) {}
 

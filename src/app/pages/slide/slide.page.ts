@@ -14,6 +14,12 @@ export class SlidePage implements AfterViewInit {
 
   swiperInstance?: Swiper;
 
+  protected slides = [
+    { text: 'Slide 1 ' },
+    { text: 'Slide 2 ' },
+    { text: 'Slide 3 ' },
+  ];
+
   constructor(private readonly _navCtrl: NavController) {}
 
   ngAfterViewInit(): void {
