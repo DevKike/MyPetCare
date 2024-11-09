@@ -4,13 +4,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
 
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    path: 'principal',
+    loadChildren: () => import('./pages/principal/principal.module').then( m => m.PrincipalPageModule)
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'my-pets',
@@ -28,13 +27,19 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
-  {
-    path: 'principal',
-    loadChildren: () => import('./pages/principal/principal.module').then( m => m.PrincipalPageModule)
-  },
+
   {
     path: 'sign-in',
     loadChildren: () => import('./pages/sign-in/sign-in.module').then( m => m.SignInPageModule)
+  },
+  {
+    path: 'slide',
+    loadChildren: () => import('./pages/slide/slide.module').then( m => m.SlidePageModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'slide',
+    pathMatch: 'full'
   },
 ];
 

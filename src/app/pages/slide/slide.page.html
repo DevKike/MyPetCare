@@ -1,0 +1,13 @@
+<ion-content>
+  <swiper-container #swiper [pagination]="true">
+    <swiper-slide>Slide 1</swiper-slide>
+    <swiper-slide>Slide 2</swiper-slide>
+    <swiper-slide>Slide 3</swiper-slide>
+  </swiper-container>
+
+  @if (!isLastSlide()) {
+  <app-button label="Next" (click)="slideNext()"></app-button>
+  } @else {
+  <app-button label="Done" (click)="doNavigate()"></app-button>
+  }
+</ion-content>
