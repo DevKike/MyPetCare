@@ -1,6 +1,7 @@
-import { Component, Input,} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ButtonColor, ButtonType } from 'src/app/types/Button';
+import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-button',
@@ -17,12 +18,11 @@ export class ButtonComponent {
   @Input() expand!: string;
   @Input() shape!: string;
 
-  constructor(private readonly _navCtrl: NavController) { }
+  constructor(private readonly _navSrv: NavigationService) {}
 
   public navigate() {
-    if(this.ref) {
-      this._navCtrl.navigateForward([this.ref]);
+    if (this.ref) {
+      this._navSrv.navigateTo(this.ref);
     }
   }
-
 }
