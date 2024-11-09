@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import Swiper from 'swiper';
 import { register } from 'swiper/element/bundle';
@@ -27,20 +21,23 @@ export class SlidePage implements AfterViewInit {
     this.swiperInstance = swiperElement.swiper;
   }
 
-  slideNext() {
+  protected slideNext() {
     if (this.swiperInstance) {
       this.swiperInstance.slideNext();
     }
   }
 
-  isLastSlide(): boolean {
+  protected isLastSlide(): boolean {
     if (this.swiperInstance) {
-      return this.swiperInstance.activeIndex === this.swiperInstance.slides.length - 1;
+      return (
+        this.swiperInstance.activeIndex ===
+        this.swiperInstance.slides.length - 1
+      );
     }
     return false;
   }
 
-  doNavigate() {
-    this._navCtrl.navigateForward('/principal')
+  protected doNavigate() {
+    this._navCtrl.navigateForward('/principal');
   }
 }
