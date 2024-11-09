@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { RemindersPageRoutingModule } from './reminders-routing.module';
 
 import { RemindersPage } from './reminders.page';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RemindersPageRoutingModule
+    RemindersPageRoutingModule,
+    SharedModule
   ],
   declarations: [RemindersPage]
 })
