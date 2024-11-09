@@ -31,7 +31,7 @@ export class SignInPage implements OnInit {
   }
 
   protected async doSignIn() {
-    await this._loadingSrv.showLoading();
+    await this._loadingSrv.showLoading('Signing in...');
     try {
       const authUser: IAuthUser = {
         email: this.signInForm.value.email,

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
 
 @Component({
