@@ -20,7 +20,8 @@ import { LoadingService } from './services/loading/loading.service';
 import { LocalNotificationsService } from './services/localNotifications/local-notifications.service';
 import { LocalStorageService } from './services/localStorage/local-storage.service';
 import { ToastService } from './services/toast/toast.service';
-import { ThumbnailComponent } from './thumbnail/thumbnail.component';
+import { ThumbnailComponent } from './components/thumbnail/thumbnail.component';
+import { CardComponent } from './components/card/card.component';
 
 const MODULES = [
   CommonModule,
@@ -42,6 +43,7 @@ const COMPONENTS = [
   SearchBarComponent,
   ListComponent,
   ThumbnailComponent,
+  CardComponent,
 ];
 
 const PROVIDERS = [

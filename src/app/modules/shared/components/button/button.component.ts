@@ -1,5 +1,6 @@
 import { Component, Input,} from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { ButtonColor, ButtonType } from 'src/app/types/Button';
 
 @Component({
   selector: 'app-button',
@@ -8,11 +9,13 @@ import { NavController } from '@ionic/angular';
 })
 export class ButtonComponent {
   @Input() label: string = 'Button';
-  @Input() type: 'button' | 'submit' | 'reset' = 'button';
+  @Input() type: ButtonType = 'button';
   @Input() disabled: boolean = false;
   @Input() ref!: string;
   @Input() icon?: string;
-  @Input() color: string = 'primary';
+  @Input() color: ButtonColor = 'primary';
+  @Input() expand!: string;
+  @Input() shape!: string;
 
   constructor(private readonly _navCtrl: NavController) { }
 
