@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-principal',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./principal.page.scss'],
 })
 export class PrincipalPage implements OnInit {
+  constructor(private readonly _authSrv: AuthService) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  protected async signInWithGoogle() {
+    try {
+      const res = await this._authSrv.signInWithGoogle();
+      console.log('🚀 ~ PrincipalPage ~ SignInWithGoogle ~ res:', res);
+    } catch (error) {
+      throw error;
+    }
   }
-
 }

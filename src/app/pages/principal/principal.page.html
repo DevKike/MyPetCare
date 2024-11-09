@@ -1,13 +1,5 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>principal</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">principal</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <app-button label="Sign in with Google" (click)="signInWithGoogle()"></app-button>
+  <app-button label="Sign in with Email" [ref]="'sign-in'"></app-button>
+  <app-button label="Register here" [ref]="'/register'"></app-button>
 </ion-content>
