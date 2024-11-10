@@ -1,0 +1,18 @@
+<app-header slot="start" href="principal" title="Sign in with email"></app-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="signInForm" (ngSubmit)="doSignIn()">
+    <ion-grid>  
+      <ion-row>
+        <ion-col>
+          <app-card>
+            <app-input type="text" label="Email" [control]="email"></app-input>
+            <app-input type="password" label="Password" [control]="password"></app-input>
+            <br>
+            <app-button [disabled]="signInForm.invalid" type="submit" label="Sign in" expand="block" shape="round"></app-button>
+          </app-card>
+        </ion-col>
+      </ion-row> 
+    </ion-grid>
+  </form>
+</ion-content>

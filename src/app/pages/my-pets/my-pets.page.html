@@ -5,12 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding" [fullscreen]="true">
-  <app-tabs [tabs]="[
-    { name: 'home', title: 'Home', icon: 'home', route: 'home' },
-    { name: 'myPets', title: 'My Pets', icon: 'paw', route: 'my-pets' },
-    { name: 'reminder', title: 'Reminders', icon: 'alarm', route: 'reminders' },
-    { name: 'settings', title: 'Settings', icon: 'settings', route: 'settings' }
-  ]"></app-tabs>
+  <app-tabs></app-tabs>
 
   <app-card-modal headerTitle="Add Pets" (confirmAction)="doRegister()" [disabled]="registerForm.invalid">
     <form [formGroup]="registerForm">
@@ -77,5 +72,3 @@
     </ion-fab-button>
   </ion-fab>
 
-
-</ion-content>

@@ -1,0 +1,15 @@
+<ion-content>
+  <swiper-container #swiper [pagination]="true">
+    @for (slide of slides; track $index) {
+    <swiper-slide>
+      <p>{{ slide.text }}</p>
+
+      @if (!isLastSlide()) {
+      <app-button label="Next" fill="clear" (click)="slideNext()"></app-button>
+      } @else {
+      <app-button label="Done" fill="clear" (click)="doNavigate()"></app-button>
+      }
+    </swiper-slide>
+    }
+  </swiper-container>
+</ion-content>
