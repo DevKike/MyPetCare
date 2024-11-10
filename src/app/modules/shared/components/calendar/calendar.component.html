@@ -1,0 +1,21 @@
+<ion-item lines="none">
+  <ion-label>Birthday</ion-label>
+  <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
+</ion-item>
+
+<ion-modal [keepContentsMounted]="true">
+  <ng-template>
+    <ion-datetime
+      id="datetime"
+      presentation="date"
+      (ionChange)="onDateChange($event)"
+      [formatOptions]="{
+        date: {
+          weekday: 'short',
+          month: 'long',
+          day: '2-digit'
+        }
+      }"
+    ></ion-datetime>
+  </ng-template>
+</ion-modal>

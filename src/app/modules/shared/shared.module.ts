@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StorageService } from './services/storage/storage.service';
 import { IonicModule } from '@ionic/angular';
@@ -22,6 +22,7 @@ import { LocalStorageService } from './services/localStorage/local-storage.servi
 import { ToastService } from './services/toast/toast.service';
 import { ThumbnailComponent } from './components/thumbnail/thumbnail.component';
 import { CardComponent } from './components/card/card.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 const MODULES = [
   CommonModule,
@@ -44,6 +45,10 @@ const COMPONENTS = [
   ListComponent,
   ThumbnailComponent,
   CardComponent,
+  SegmentComponent,
+  SheetModalComponent,
+  SearchBarComponent,
+  CalendarComponent
 ];
 
 const PROVIDERS = [

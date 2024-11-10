@@ -4,7 +4,71 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="ion-padding" [fullscreen]="true">
   <app-tabs></app-tabs>
 
-</ion-content>
+  <app-card-modal headerTitle="Add Pets" (confirmAction)="doRegister()" [disabled]="registerForm.invalid">
+    <form [formGroup]="registerForm">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-md="8" class="ion-text-center">
+          <div class="image-upload-container">
+            <div class="image-preview" [style.backgroundImage]="'url(' + imageUrl + ')'">
+              <input type="file" #fileInput hidden />
+              <ion-button fill="clear" (click)="fileInput.click()">
+                <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <app-input type="text" label="Name" [control]="name"></app-input>
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
+        <small *ngIf="name.errors?.['required']">Name is required.</small>
+      </div>
+
+      <app-input type="number" label="Age" [control]="age"></app-input>
+      <div *ngIf="age.invalid && (age.dirty || age.touched)" class="error-message">
+        <small *ngIf="age.errors?.['required']">Age is required.</small>
+        <small *ngIf="age.errors?.['min']">Age must be a positive number.</small>
+      </div>
+
+      <br>
+      <app-segment firstOptionLabel="Male" secondOptionLabel="Female"
+        (optionChange)="onGenderChange($event)"></app-segment>
+
+      <app-sheet-modal>
+        <app-search-bar (breedSelected)="onBreedSelected($event)" [modal]="modalInstance"></app-search-bar>
+      </app-sheet-modal>
+
+      <br>
+      <app-button color="dark" label="Breed" id="open-sheet-modal" [expand]="'block'" icon="arrow-forward"
+        [slot]="'end'" [fill]="'clear'"> </app-button>
+      <br>
+
+      <app-calendar (dateSelected)="OnDateSelected($event)"></app-calendar>
+
+    </form>
+  </app-card-modal>
+
+  <ion-list *ngIf="petsList.length > 0">
+    <ion-item *ngFor="let pet of petsList">
+      <ion-thumbnail slot="start">
+        <img [src]="imageUrl">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ pet.name }}</h2>
+        <p>Breed: {{ pet.breed }}</p>
+        <p>Age: {{ pet.age }} years</p>
+        <p>Gender: {{ pet.gender }}</p>
+        <p>Birth Date: {{ pet.birthDate | date }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab class="floating-button">
+    <ion-fab-button id="open-modal">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+

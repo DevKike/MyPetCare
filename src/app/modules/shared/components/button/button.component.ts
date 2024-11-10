@@ -17,6 +17,8 @@ export class ButtonComponent {
   @Input() expand!: string;
   @Input() shape!: string;
   @Input() fill: ButtonFill = 'solid';
+  @Input() slot!: 'start' | 'end'
+
 
   constructor(private readonly _navSrv: NavigationService) {}
 

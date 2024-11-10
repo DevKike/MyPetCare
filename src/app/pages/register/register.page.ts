@@ -123,4 +123,6 @@ export class RegisterPage implements OnInit {
       phoneNumber: this.phoneNumber,
     });
   }
+  
+
 }

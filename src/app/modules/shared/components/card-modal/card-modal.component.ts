@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 
@@ -10,12 +10,22 @@ import { OverlayEventDetail } from '@ionic/core/components';
 export class CardModalComponent {
   @ViewChild(IonModal) modal!: IonModal;
   @Input() headerTitle!: string
+  @Input() disabled: boolean = false;
+  @Output() confirmAction = new EventEmitter<void>();
+
+  private isProcessing = false;
 
   protected async cancel() {
+    this.isProcessing = false;
     this.modal.dismiss(null, 'cancel');
   }
 
   protected async confirm() {
-    await this.modal.dismiss(true, 'confirm');
+    if (!this.isProcessing) {
+      this.isProcessing = true;
+      this.confirmAction.emit();
+      await this.modal.dismiss(true, 'confirm');
+      this.isProcessing = false;
+    }
   }
 }
