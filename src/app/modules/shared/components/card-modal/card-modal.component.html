@@ -9,10 +9,12 @@
         <ion-title class="centered-title">{{ headerTitle }}</ion-title>
 
         <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true">Add</ion-button>
+          <ion-button (click)="confirm()" [strong]="true" [disabled]="disabled">Add</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content> </ion-content>
+    <ion-content>
+      <ng-content></ng-content>
+    </ion-content>
   </ng-template>
 </ion-modal>
