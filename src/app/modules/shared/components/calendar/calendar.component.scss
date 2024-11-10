@@ -1,0 +1,32 @@
+ion-item {
+  --border-radius: 10px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 48px;
+  margin-bottom: 16px;
+
+  ion-label {
+    --color: var(--text-primary);
+    margin: 0;
+    font-size: 18px;
+  }
+
+  ion-datetime-button {
+    --color: var(--text-secondary);
+    margin: 0;
+    padding: 0;
+    height: auto;
+    font-size: 50px;
+
+    &::part(native) {
+      padding: 0;
+      background: transparent;
+    }
+
+    &::part(text) {
+      background: transparent;
+      padding: 0;
+    }
+  }
+}
+

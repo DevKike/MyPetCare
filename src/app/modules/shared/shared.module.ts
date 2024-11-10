@@ -21,6 +21,9 @@ import { LocalNotificationsService } from './services/localNotifications/local-n
 import { LocalStorageService } from './services/localStorage/local-storage.service';
 import { ToastService } from './services/toast/toast.service';
 import { ThumbnailComponent } from './thumbnail/thumbnail.component';
+import { CardComponent } from './components/card/card.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 const MODULES = [
   CommonModule,
@@ -28,6 +31,7 @@ const MODULES = [
   RouterModule,
   FormsModule,
   ReactiveFormsModule,
+  AngularFireAuthModule
 ];
 
 const COMPONENTS = [
@@ -42,6 +46,11 @@ const COMPONENTS = [
   SearchBarComponent,
   ListComponent,
   ThumbnailComponent,
+  CardComponent,
+  SegmentComponent,
+  SheetModalComponent,
+  SearchBarComponent,
+  CalendarComponent
 ];
 
 const PROVIDERS = [

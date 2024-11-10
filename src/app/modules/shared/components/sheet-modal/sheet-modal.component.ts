@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonModal } from '@ionic/angular';
 
 @Component({
   selector: 'app-sheet-modal',
@@ -6,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sheet-modal.component.scss'],
 })
 export class SheetModalComponent  implements OnInit {
-
+  @ViewChild(IonModal) modal!: IonModal;
   constructor() { }
 
   ngOnInit() {}
+
+  closeModal() {
+    this.modal.dismiss();
+  }
+
+
 
 }
