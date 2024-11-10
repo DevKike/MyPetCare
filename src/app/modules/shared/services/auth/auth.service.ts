@@ -11,12 +11,12 @@ export class AuthService {
     return await this._angularFire.createUserWithEmailAndPassword(email, password);
   }
 
-  public async login(email: string, password: string) {
+  public async signInWithEmailAndPassword(email: string, password: string) {
     return await this._angularFire.signInWithEmailAndPassword(email, password);
   }
 
-  public async logout() {
-    const logoutRes = await this._angularFire.signOut();
+  public async singOut() {
+    await this._angularFire.signOut();
   }
 
   public async isAuth() {

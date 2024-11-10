@@ -1,8 +1,4 @@
-<ion-header [translucent]="true" class="header-dark">
-  <ion-toolbar>
-    <ion-title>Create Account</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header slot="start" href="principal" title="Create Account"></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding content-dark">
   <div class="form-container-dark">
@@ -11,7 +7,7 @@
         <ion-col size="12" size-md="8" class="ion-text-center">
           <div class="image-upload-container">
             <div class="image-preview" [style.backgroundImage]="'url(' + imageUrl + ')'">
-              <input type="file" #fileInput hidden />
+              <input type="file" #fileInput (change)="uploadImage($event)" hidden/>
               <ion-button fill="clear" (click)="fileInput.click()">
                 <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
               </ion-button>
@@ -27,9 +23,8 @@
       <app-input type="number" label="Age" [control]="age"></app-input>
       <app-input type="number" label="Phone Number" [control]="phoneNumber"></app-input>
 
-      <div class="button-container">
-        <app-button [disabled]="registerForm.invalid" label="Register" type="submit" class="submit-button"></app-button>
-      </div>
+      <br><br>
+      <app-button [disabled]="registerForm.invalid" label="Create Account" type="submit" expand="block" shape="round"></app-button>
     </form>
   </div>
 

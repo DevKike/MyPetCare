@@ -1,4 +1,5 @@
 export const environment = {
+  production: false,
   FIREBASE_CREDENTIALS: {
     apiKey: 'AIzaSyDiFmdFdO-EFARB1M2Rzl_Y4pJJWnUzYmc',
     authDomain: 'taskappionic.firebaseapp.com',

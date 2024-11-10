@@ -1,4 +1,12 @@
-<ion-button [color]="color" [type]="type" [disabled]="disabled" (click)="navigate()">
+<ion-button
+  [color]="color"
+  [type]="type"
+  [disabled]="disabled"
+  (click)="navigate()"
+  [expand]="expand"
+  [shape]="shape"
+  [fill]="fill"
+>
   <ion-icon *ngIf="icon" [name]="icon" slot="start"></ion-icon>
   {{ label }}
 </ion-button>

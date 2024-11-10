@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
+import { Storage } from 'src/app/enums/Storage';
 import { IAuthUser, ICreateUser } from 'src/app/interfaces/IUser';
 import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
 import { LocalNotificationsService } from 'src/app/modules/shared/services/localNotifications/local-notifications.service';
+import { NavigationService } from 'src/app/modules/shared/services/navigation/navigation.service';
 import { StorageService } from 'src/app/modules/shared/services/storage/storage.service';
 import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
-import { __await } from 'tslib';
 
 @Component({
   selector: 'app-register',
@@ -24,8 +25,7 @@ export class RegisterPage implements OnInit {
   public phoneNumber!: FormControl;
   public registerForm!: FormGroup;
   public uid: string = '';
-  protected imageUrl: string =
-    'https://cdn-icons-png.freepik.com/512/6596/6596121.png';
+  protected imageUrl: string = 'https://cdn-icons-png.freepik.com/512/6596/6596121.png';
   protected filePath!: string;
   private fileToUpload: any;
 
@@ -35,7 +35,8 @@ export class RegisterPage implements OnInit {
     private readonly _loadingSrv: LoadingService,
     private readonly _storageSrv: StorageService,
     private readonly _toastSrv: ToastService,
-    private readonly _localNotificationsSrv: LocalNotificationsService
+    private readonly _localNotificationsSrv: LocalNotificationsService,
+    private readonly _navSrv: NavigationService,
   ) {}
 
   ngOnInit() {
@@ -55,25 +56,17 @@ export class RegisterPage implements OnInit {
         lastName: this.registerForm.value.lastName,
         age: this.registerForm.value.age,
         phoneNumber: this.registerForm.value.phoneNumber,
-        /* imageUrl: this.registerForm.value.imageUrl, */
+        imageUrl: this.imageUrl,
       };
 
-      const res = await this._authSrv.register(
-        authUser.email,
-        authUser.password
-      );
+      const res = await this._authSrv.register(authUser.email, authUser.password);
       const userId = res.user?.uid;
 
-      await this._firestoreSrv.save(
-        FirestoreCollection.USERS,
-        userData,
-        userId
-      );
-      await this._loadingSrv.hideLoading();
+      await this._firestoreSrv.save(FirestoreCollection.USERS, userData, userId);
+
       this.registerForm.reset();
 
-      const hasPermission =
-        await this._localNotificationsSrv.checkNotificationPermission();
+      const hasPermission = await this._localNotificationsSrv.checkNotificationPermission();
 
       if (hasPermission) {
         await this._localNotificationsSrv.scheduleNotification(
@@ -86,8 +79,30 @@ export class RegisterPage implements OnInit {
           'res://drawable/huella_48'
         );
       }
+
+      await this._navSrv.navigateRoot('/sign-in');
     } catch (error) {
       throw error;
+    } finally {
+      await this._loadingSrv.hideLoading();
+    }
+  }
+
+  protected async uploadImage(event: any) {
+    try {
+      await this._loadingSrv.showLoading('Uploading...');
+      
+      this.fileToUpload = event.target.files[0];
+      this.filePath = `${Storage.IMAGE}${this.fileToUpload.name}`;
+
+      await this._storageSrv.upload(this.filePath, this.fileToUpload)
+
+      await this._toastSrv.showToast('Image uploaded with success!');
+      this.imageUrl = await this._storageSrv.getUrl(this.filePath);
+    } catch (error) {
+      throw error;
+    } finally {
+      await this._loadingSrv.hideLoading();
     }
   }
 
