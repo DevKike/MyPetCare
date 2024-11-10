@@ -1,0 +1,54 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.search-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--dark-bg);
+  padding: 8px 16px;
+
+  ion-searchbar {
+    --background: var(--card-bg);
+    --color: var(--text-primary);
+    --placeholder-color: var(--text-secondary);
+    --icon-color: var(--text-secondary);
+    --clear-button-color: var(--text-secondary);
+    margin: 0;
+    padding: 0;
+
+    &.searchbar-should-show-clear {
+      --clear-button-color: var(--text-secondary);
+    }
+  }
+}
+
+.ion-content-scroll {
+  height: 100%;
+  overflow-y: auto;
+
+  ion-list {
+    background: var(--dark-bg);
+  }
+}
+
+/* Estilos para el componente app-list */
+::ng-deep app-list {
+  ion-list {
+    padding: 0;
+    margin: 0;
+  }
+
+  ion-item {
+    --background: var(--dark-bg);
+    --color: var(--text-primary);
+    --border-color: var(--card-bg);
+
+    &:last-child {
+      --border-width: 0;
+    }
+  }
+}
