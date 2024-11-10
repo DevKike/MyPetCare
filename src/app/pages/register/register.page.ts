@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
+import { Storage } from 'src/app/enums/Storage';
 import { IAuthUser, ICreateUser } from 'src/app/interfaces/IUser';
 import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
@@ -55,7 +56,7 @@ export class RegisterPage implements OnInit {
         lastName: this.registerForm.value.lastName,
         age: this.registerForm.value.age,
         phoneNumber: this.registerForm.value.phoneNumber,
-        /* imageUrl: this.registerForm.value.imageUrl, */
+        imageUrl: this.imageUrl,
       };
 
       const res = await this._authSrv.register(authUser.email, authUser.password);
@@ -80,6 +81,24 @@ export class RegisterPage implements OnInit {
       }
 
       await this._navSrv.navigateRoot('/sign-in');
+    } catch (error) {
+      throw error;
+    } finally {
+      await this._loadingSrv.hideLoading();
+    }
+  }
+
+  protected async uploadImage(event: any) {
+    try {
+      await this._loadingSrv.showLoading('Uploading...');
+      
+      this.fileToUpload = event.target.files[0];
+      this.filePath = `${Storage.IMAGE}${this.fileToUpload.name}`;
+
+      await this._storageSrv.upload(this.filePath, this.fileToUpload)
+
+      await this._toastSrv.showToast('Image uploaded with success!');
+      this.imageUrl = await this._storageSrv.getUrl(this.filePath);
     } catch (error) {
       throw error;
     } finally {
