@@ -14,3 +14,5 @@ export type ButtonColor =
   | 'warm';
 
 export type ButtonFill = 'solid' | 'clear' | 'outline';
+
+export type ButtonSlot = 'start' | 'end';

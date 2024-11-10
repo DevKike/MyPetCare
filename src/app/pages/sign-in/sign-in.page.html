@@ -1,8 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Sign in with Email</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header slot="start" href="principal" title="Sign in with email"></app-header>
 
 <ion-content [fullscreen]="true">
   <form [formGroup]="signInForm" (ngSubmit)="doSignIn()">

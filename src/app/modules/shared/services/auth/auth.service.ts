@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { GoogleAuthProvider } from 'firebase/auth'
 
 @Injectable({
   providedIn: 'root',
@@ -16,13 +15,8 @@ export class AuthService {
     return await this._angularFire.signInWithEmailAndPassword(email, password);
   }
 
-  public async signInWithGoogle() {
-    const provider = new GoogleAuthProvider();
-    return await this._angularFire.signInWithPopup(provider);
-  }
-
-  public async logout() {
-    const logoutRes = await this._angularFire.signOut();
+  public async singOut() {
+    await this._angularFire.signOut();
   }
 
   public async isAuth() {
