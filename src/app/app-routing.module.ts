@@ -11,7 +11,8 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'my-pets',
     loadChildren: () => import('./pages/my-pets/my-pets.module').then( m => m.MyPetsPageModule)
   },
@@ -28,6 +29,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
 
+  {
+    path: 'vaccine',
+    loadChildren: () => import('./pages/vaccine/vaccine.module').then( m => m.VaccinePageModule)
+  },
 
 ];
 
