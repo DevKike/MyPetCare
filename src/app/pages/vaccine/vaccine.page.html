@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>vaccine</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="vaccineForm" (ngSubmit)="addVaccines(vaccineForm.value)">
+    <app-input type="text" label="Name" [control]="name"></app-input>
+    <app-input type="date" label="Application Date" [control]="applicationDate"></app-input>
+    <app-input type="url" label="certificate" [control]="certificate"></app-input>
+  </form>
+  <div>
+    <app-button [disabled]="vaccineForm.invalid" label="create" type="submit" (click)="addVaccines(vaccineForm.value)"></app-button>
+  </div>
+</ion-content>
