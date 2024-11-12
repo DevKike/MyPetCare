@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { Observable } from 'rxjs';
 import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
 import { ICreateVaccine, IVaccine } from 'src/app/interfaces/IVaccine';
@@ -14,8 +15,8 @@ import { StorageService } from 'src/app/modules/shared/services/storage/storage.
   export class VaccinePage implements OnInit{
     public name!: FormControl;
     public applicationDate!: FormControl;
-    public certificate!: FormControl;
     public vaccineForm!: FormGroup;
+    public filePath: any;
 
     constructor(
       private readonly _storageSrv: StorageService,
@@ -28,23 +29,38 @@ import { StorageService } from 'src/app/modules/shared/services/storage/storage.
         this.initForm();
     }
 
+    async pickPDFFiles(){
+      try {
+        const result = await FilePicker.pickFiles({
+          types: ['application/pdf'],
+          readData: true
+        });
+
+        if (result && result.files.length > 0) {
+          const file = result.files[0];
+          const filePath = `vaccines/${file.name}`; 
+
+          await this._storageSrv.upload(filePath, file);
+          this.filePath = await this._storageSrv.getUrl(filePath);
+
+          console.log("archive pdf save successfully", this.filePath)
+        } else {
+          alert("no se selecciono nada");
+        }
+      } catch(error) {
+        console.error("Error", error)
+      }
+    }
+
     
     
     async addVaccines(vaccine: IVaccine, file?: File): Promise<void> { 
       console.log('Entrando al método addVaccines');
       try {
-        if (file) {
-          const filePath = `vaccines/certificates/${new Date().getTime()}_${
-            file.name
-          }`;
-          await this._storageSrv.upload(filePath, file);
-          vaccine.certificate = await this._storageSrv.getUrl(filePath);
-        }
-
         const vaccineData: ICreateVaccine = {
           name: this.vaccineForm.value.name,
           applicationDate: this.vaccineForm.value.applicationDate,
-          certificate: this.vaccineForm.value.certificate
+          certificate: this.filePath || null
         }
     
         if (vaccine.id) {
@@ -70,12 +86,10 @@ import { StorageService } from 'src/app/modules/shared/services/storage/storage.
     private initForm() {
       this.name = new FormControl('', [Validators.required]);
       this.applicationDate = new FormControl('', [Validators.required]);
-      this.certificate = new FormControl('', [Validators.required]);
 
       this.vaccineForm = new FormGroup({
         name: this.name,
         applicationDate: this.applicationDate,
-        certificate: this.certificate
       });
     }
 
