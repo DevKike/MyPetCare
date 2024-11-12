@@ -57,6 +57,20 @@ export class FirestoreService {
     );
   }
 
+  public getDocumentsByQuery(collection: string, field: string, value: any): Observable<any[]> {
+    const collectionRef = this._ngFirestore.collection(collection, ref => ref.where(field, '==', value));
+
+    return collectionRef.snapshotChanges().pipe(
+      map((snapshot) =>
+        snapshot.map((doc) => {
+          const data = doc.payload.doc.data();
+          const id = doc.payload.doc.id;
+          return { id, ...(data ?? {}) };
+        })
+      )
+    );
+  }
+
   public async update(collection: string, documentId: string, data: Partial<any>): Promise<void> {
     try {
       await this._ngFirestore
