@@ -47,6 +47,10 @@ const routes: Routes = [
     pathMatch: 'full'
   },
 
+  {
+    path: 'vaccine',
+    loadChildren: () => import('./pages/vaccine/vaccine.module').then( m => m.VaccinePageModule)
+  },
 
 ];
 
