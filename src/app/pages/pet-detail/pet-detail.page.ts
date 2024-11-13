@@ -7,6 +7,7 @@ import { IPet } from 'src/app/interfaces/IPet';
 import { AlertService } from 'src/app/modules/shared/services/alert/alert.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pet-detail',
@@ -24,6 +25,7 @@ export class PetDetailPage implements OnInit {
   public imageUrl: string =
     'https://cdn-icons-png.freepik.com/512/6596/6596121.png';
   @ViewChild(IonModal) modalInstance!: IonModal;
+  private isPetDeleted = false;
 
   constructor(
     private _route: ActivatedRoute,
@@ -31,7 +33,6 @@ export class PetDetailPage implements OnInit {
     private _firestoreService: FirestoreService,
     private _toastService: ToastService,
     private _alertService: AlertService
-
   ) {
     this.initializeForm();
   }
@@ -85,6 +86,8 @@ export class PetDetailPage implements OnInit {
       }
 
       await this._firestoreService.delete(FirestoreCollection.PETS, petId);
+      this.isPetDeleted = true;
+
       this._toastService.showToast('Pet deleted successfully');
       await this._router.navigate(['/my-pets'], { replaceUrl: true });
     } catch (error) {
@@ -94,17 +97,20 @@ export class PetDetailPage implements OnInit {
   }
 
   private async loadPetDetails() {
+    if (this.isPetDeleted) return;
+
     try {
       const petId = this._route.snapshot.paramMap.get('id');
 
       if (!petId) {
         this._toastService.showToast('Pet ID not found');
-        this._router.navigate(['/my-pets']);
+        await this._router.navigate(['/my-pets']);
         return;
       }
 
       this._firestoreService
         .getDocumentById(FirestoreCollection.PETS, petId)
+        .pipe(take(1))
         .subscribe(
           (data: IPet) => {
             if (data) {
@@ -130,10 +136,9 @@ export class PetDetailPage implements OnInit {
     } catch (error) {
       console.error('Error in loadPetDetails:', error);
       this._toastService.showToast('Error loading pet details');
-      this._router.navigate(['/my-pets']);
+      await this._router.navigate(['/my-pets']);
     }
   }
-
   protected async savePetDetails() {
     try {
       if (this.editForm.invalid) {
