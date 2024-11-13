@@ -51,24 +51,20 @@
     </form>
   </app-card-modal>
 
-  <ion-list *ngIf="petsList.length > 0">
-    <ion-item *ngFor="let pet of petsList">
-      <ion-thumbnail slot="start">
-        <img [src]="imageUrl">
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ pet.name }}</h2>
-        <p>Breed: {{ pet.breed }}</p>
-        <p>Age: {{ pet.age }} years</p>
-        <p>Gender: {{ pet.gender }}</p>
-        <p>Birth Date: {{ pet.birthDate | date }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-item *ngFor="let pet of petsList" (click)="goToPetDetail(pet.id || '')" button>
+    <ion-thumbnail slot="start">
+      <img [src]="pet.imageUrl || imageUrl" alt="Pet image">
+    </ion-thumbnail>
+    <ion-label>
+      <h2>{{ pet.name }}</h2>
+      <h2>{{ pet.breed }}  </h2>
+    </ion-label>
+  </ion-item>
+
+
 
   <ion-fab class="floating-button">
     <ion-fab-button id="open-modal">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
