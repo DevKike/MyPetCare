@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ButtonSlot } from 'src/app/types/Button';
 
 @Component({
   selector: 'app-header',
@@ -6,7 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-@Input() title: string = '';
-  constructor() { }
+  @Input() title: string = '';
+  @Input() slot!: ButtonSlot;
+  @Input() href!: string;
 
+  constructor() {}
 }

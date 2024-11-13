@@ -1,5 +1,6 @@
-import { Component, Input,} from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, Input } from '@angular/core';
+import { ButtonColor, ButtonFill, ButtonType } from 'src/app/types/Button';
+import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-button',
@@ -8,18 +9,22 @@ import { NavController } from '@ionic/angular';
 })
 export class ButtonComponent {
   @Input() label: string = 'Button';
-  @Input() type: 'button' | 'submit' | 'reset' = 'button';
+  @Input() type: ButtonType = 'button';
   @Input() disabled: boolean = false;
   @Input() ref!: string;
   @Input() icon?: string;
-  @Input() color: string = 'primary';
+  @Input() color: ButtonColor = 'primary';
+  @Input() expand!: string;
+  @Input() shape!: string;
+  @Input() fill: ButtonFill = 'solid';
+  @Input() slot!: 'start' | 'end'
 
-  constructor(private readonly _navCtrl: NavController) { }
 
-  public navigate() {
-    if(this.ref) {
-      this._navCtrl.navigateForward([this.ref]);
+  constructor(private readonly _navSrv: NavigationService) {}
+
+  public async navigate() {
+    if (this.ref) {
+      await this._navSrv.navigateTo(this.ref);
     }
   }
-
 }

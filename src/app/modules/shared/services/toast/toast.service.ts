@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Toast } from '@capacitor/toast';
+import { ToastDuration, ToastPosition } from 'src/app/types/Toast';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { Toast } from '@capacitor/toast';
 export class ToastService {
 
   constructor() { }
-  async showToast(message: string, duration: 'short' | 'long' = 'short' , position: 'top' | 'center' | 'bottom' = 'bottom') {
+  async showToast(message: string, duration: ToastDuration = 'short' , position: ToastPosition = 'bottom') {
     await Toast.show( {
       text: message,
       duration: duration,

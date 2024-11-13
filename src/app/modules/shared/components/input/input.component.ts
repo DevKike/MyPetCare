@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { InputType } from 'src/app/types/InputType';
+import { InputType } from 'src/app/types/Input';
 
 @Component({
   selector: 'app-input',
@@ -9,7 +9,6 @@ import { InputType } from 'src/app/types/InputType';
 })
 export class InputComponent {
   @Input() type!: InputType;
-  @Input() fill!: string;
   @Input() label!: string;
   @Input() placeHolder!: string;
   @Input() helperText!: string;
