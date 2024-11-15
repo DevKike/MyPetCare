@@ -38,7 +38,7 @@ export class RegisterPage implements OnInit {
     private readonly _toastSrv: ToastService,
     private readonly _localNotificationsSrv: LocalNotificationsService,
     private readonly _navSrv: NavigationService,
-    private readonly _cameraSrv: CameraService,
+    private readonly _cameraSrv: CameraService
   ) {}
 
   ngOnInit() {
@@ -61,14 +61,22 @@ export class RegisterPage implements OnInit {
         imageUrl: this.imageUrl,
       };
 
-      const res = await this._authSrv.register(authUser.email, authUser.password);
+      const res = await this._authSrv.register(
+        authUser.email,
+        authUser.password
+      );
       const userId = res.user?.uid;
 
-      await this._firestoreSrv.save(FirestoreCollection.USERS, userData, userId);
+      await this._firestoreSrv.save(
+        FirestoreCollection.USERS,
+        userData,
+        userId
+      );
 
       this.registerForm.reset();
 
-      const hasPermission = await this._localNotificationsSrv.checkNotificationPermission();
+      const hasPermission =
+        await this._localNotificationsSrv.checkNotificationPermission();
 
       if (hasPermission) {
         await this._localNotificationsSrv.scheduleNotification(
@@ -90,7 +98,7 @@ export class RegisterPage implements OnInit {
     }
   }
 
-/*   protected async uploadImage(event: any) {
+  /*   protected async uploadImage(event: any) {
     try {
       await this._loadingSrv.showLoading('Uploading...');
       
@@ -111,18 +119,20 @@ export class RegisterPage implements OnInit {
   protected async uploadImage() {
     try {
       const imageUri = await this._cameraSrv.chooseImageSource();
-      
+
       if (!imageUri) {
         return;
       }
-      
+
       await this._loadingSrv.showLoading('Uploading...');
-      
+
       this.filePath = `${Storage.IMAGE}${new Date().getTime()}_photo.jpg`;
-      const fileToUpload = await this.uriToBlob(imageUri);
-      
-      await this._storageSrv.upload(this.filePath, fileToUpload);
-      
+      this.fileToUpload = await this.uriToBlob(imageUri);
+
+      await this._storageSrv.upload(this.filePath, this.fileToUpload);
+
+      this.imageUrl = await this._storageSrv.getUrl(this.filePath);
+
       await this._toastSrv.showToast('Uploaded with success');
     } catch (error) {
       await this._toastSrv.showToast('An error ocurred');

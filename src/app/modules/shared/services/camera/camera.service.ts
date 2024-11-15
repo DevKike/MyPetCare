@@ -14,17 +14,6 @@ export class CameraService {
     this.initCamera();
   }
 
-  private async takePhoto(source: CameraSource): Promise<string | undefined> {
-    const photo = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
-      source: source,
-    });
-
-    return photo.webPath;
-  }
-
   public async chooseImageSource(): Promise<string | undefined> {
     const hasPermission = await this.checkCameraPermission();
 
@@ -32,7 +21,7 @@ export class CameraService {
       await this.initCamera();
       return;
     }
-    
+
     const actionSheet = await this._actionSheetController.create({
       header: 'Select your option',
       buttons: [
@@ -70,6 +59,13 @@ export class CameraService {
     await this.savePermissionStatus(permission);
   }
 
+  private async savePermissionStatus(permission: PermissionStatus): Promise<void> {
+    await Preferences.set({
+      key: CapacitorPreferences.CAMERA_PERMISSION_KEY,
+      value: permission.camera === 'granted' ? 'true' : 'false',
+    });
+  }
+
   private async checkCameraPermission(): Promise<boolean> {
     const { value } = await Preferences.get({
       key: CapacitorPreferences.CAMERA_PERMISSION_KEY,
@@ -77,10 +73,14 @@ export class CameraService {
     return value === 'true';
   }
 
-  private async savePermissionStatus(permission: PermissionStatus): Promise<void> {
-    await Preferences.set({
-      key: CapacitorPreferences.CAMERA_PERMISSION_KEY,
-      value: permission.camera === 'granted' ? 'true' : 'false',
+  private async takePhoto(source: CameraSource): Promise<string | undefined> {
+    const photo = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: source,
     });
+
+    return photo.webPath;
   }
 }
