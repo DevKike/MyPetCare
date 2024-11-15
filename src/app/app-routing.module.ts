@@ -36,11 +36,22 @@ const routes: Routes = [
     path: 'slide',
     loadChildren: () => import('./pages/slide/slide.module').then( m => m.SlidePageModule)
   },
+
+  {
+    path: 'pet-detail/:id',
+    loadChildren: () => import('./pages/pet-detail/pet-detail.module').then( m => m.PetDetailPageModule)
+  },
   {
     path: '**',
     redirectTo: 'slide',
     pathMatch: 'full'
   },
+
+  {
+    path: 'vaccine',
+    loadChildren: () => import('./pages/vaccine/vaccine.module').then( m => m.VaccinePageModule)
+  },
+
 ];
 
 @NgModule({

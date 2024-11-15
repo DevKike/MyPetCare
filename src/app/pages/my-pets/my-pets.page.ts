@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
 import { ICreatePets } from 'src/app/interfaces/IPet';
@@ -34,11 +35,13 @@ export class MyPetsPage implements OnInit {
     private readonly _loadingSrv: LoadingService,
     private readonly _storageSrv: StorageService,
     private readonly _toastSrv: ToastService,
-    private readonly _localNotificationsSrv: LocalNotificationsService
+    private readonly _localNotificationsSrv: LocalNotificationsService,
+    private readonly _router: Router
   ) {}
 
   ngOnInit() {
     this.initForm();
+    this.loadUserPets();
   }
 
   public onGenderChange(selectedGender: string) {
@@ -53,14 +56,75 @@ export class MyPetsPage implements OnInit {
     this.registerForm.patchValue({ birthDate: selectedDate });
   }
 
+  public async goToPetDetail(petId: string) {
+    try {
+      if (!petId) {
+        this._toastSrv.showToast('Pet ID is missing');
+        return;
+      }
+
+      const userId = this._authSrv.getAuthUserId();
+      if (!userId) {
+        this._toastSrv.showToast('User not authenticated');
+        this._router.navigate(['/slide']);
+        return;
+      }
+
+      await this._router.navigate(['/pet-detail', petId]);
+    } catch (error) {
+      console.error('Error navigating to pet detail:', error);
+      this._toastSrv.showToast('Error accessing pet details');
+    }
+  }
+
+  private async loadUserPets() {
+    await this._loadingSrv.showLoading('Cargando mascotas...');
+
+    try {
+      const userId = await this._authSrv.getAuthUserId();
+      if (!userId) {
+        await this._loadingSrv.hideLoading();
+        this._toastSrv.showToast('User not authenticated');
+        return;
+      }
+
+      this._firestoreSrv
+        .getDocumentsByQuery(FirestoreCollection.PETS, 'userId', userId)
+        .subscribe(
+          (pets) => {
+            this.petsList = pets;
+            this._loadingSrv.hideLoading();
+          },
+          (error) => {
+            console.error('Error loading pets:', error);
+            this._loadingSrv.hideLoading();
+          }
+        );
+    } catch (error) {
+      console.error('Error loading pets:', error);
+      this._loadingSrv.hideLoading();
+    }
+  }
+
   protected async doRegister() {
     if (this.registerForm.invalid) {
       this._toastSrv.showToast('Please fill all fields correctly');
       return;
     }
+
     try {
       await this._loadingSrv.showLoading('Registering...');
-      const petData: ICreatePets = this.registerForm.value;
+
+      const userId = await this._authSrv.getAuthUserId();
+      if (!userId) {
+        this._toastSrv.showToast('User not authenticated');
+        return;
+      }
+
+      const petData: ICreatePets = {
+        ...this.registerForm.value,
+        userId,
+      };
 
       await this._firestoreSrv.save(FirestoreCollection.PETS, petData);
 
@@ -74,11 +138,11 @@ export class MyPetsPage implements OnInit {
       if (hasPermission) {
         await this._localNotificationsSrv.scheduleNotification(
           1,
-          'Successful Registration',
+          'Registered Pet!',
           'Your pet has been successfully registered',
           'Thanks for using our app!',
           '',
-          'res://drawable/logo_64',
+          'res://drawable/logo_36',
           'res://drawable/huella_48'
         );
       }
