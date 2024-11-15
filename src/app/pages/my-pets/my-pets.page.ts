@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
-import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
-import { ICreatePets } from 'src/app/interfaces/IPet';
+import { FirestoreCollection } from 'src/app/modules/shared/enums/FirestoreCollection';
+import { ICreatePets } from 'src/app/modules/shared/interfaces/IPet';
 import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';

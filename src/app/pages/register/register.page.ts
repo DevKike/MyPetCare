@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
-import { Storage } from 'src/app/enums/Storage';
-import { IAuthUser, ICreateUser } from 'src/app/interfaces/IUser';
+import { FirestoreCollection } from 'src/app/modules/shared/enums/FirestoreCollection';
+import { Storage } from 'src/app/modules/shared/enums/Storage';
+import { IAuthUser, ICreateUser } from 'src/app/modules/shared/interfaces/IUser';
 import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
+import { CameraService } from 'src/app/modules/shared/services/camera/camera.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
 import { LocalNotificationsService } from 'src/app/modules/shared/services/localNotifications/local-notifications.service';
@@ -37,6 +38,7 @@ export class RegisterPage implements OnInit {
     private readonly _toastSrv: ToastService,
     private readonly _localNotificationsSrv: LocalNotificationsService,
     private readonly _navSrv: NavigationService,
+    private readonly _cameraSrv: CameraService,
   ) {}
 
   ngOnInit() {
@@ -88,7 +90,7 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  protected async uploadImage(event: any) {
+/*   protected async uploadImage(event: any) {
     try {
       await this._loadingSrv.showLoading('Uploading...');
       
@@ -100,6 +102,30 @@ export class RegisterPage implements OnInit {
       await this._toastSrv.showToast('Image uploaded with success!');
       this.imageUrl = await this._storageSrv.getUrl(this.filePath);
     } catch (error) {
+      throw error;
+    } finally {
+      await this._loadingSrv.hideLoading();
+    }
+  } */
+
+  protected async uploadImage() {
+    try {
+      const imageUri = await this._cameraSrv.chooseImageSource();
+      
+      if (!imageUri) {
+        return;
+      }
+      
+      await this._loadingSrv.showLoading('Uploading...');
+      
+      this.filePath = `${Storage.IMAGE}${new Date().getTime()}_photo.jpg`;
+      const fileToUpload = await this.uriToBlob(imageUri);
+      
+      await this._storageSrv.upload(this.filePath, fileToUpload);
+      
+      await this._toastSrv.showToast('Uploaded with success');
+    } catch (error) {
+      await this._toastSrv.showToast('An error ocurred');
       throw error;
     } finally {
       await this._loadingSrv.hideLoading();
@@ -123,6 +149,13 @@ export class RegisterPage implements OnInit {
       phoneNumber: this.phoneNumber,
     });
   }
-  
 
+  private async uriToBlob(uri: string) {
+    try {
+      const res = await fetch(uri);
+      return await res.blob();
+    } catch (error) {
+      return undefined;
+    }
+  }
 }

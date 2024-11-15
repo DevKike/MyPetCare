@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ButtonSlot } from 'src/app/types/Button';
+import { ButtonSlot } from 'src/app/modules/shared/types/Button';
 
 @Component({
   selector: 'app-header',

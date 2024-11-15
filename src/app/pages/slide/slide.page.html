@@ -5,9 +5,9 @@
       <p>{{ slide.text }}</p>
 
       @if (!isLastSlide()) {
-      <app-button label="Next" fill="clear" (click)="slideNext()"></app-button>
+        <app-button label="Next" fill="clear" (click)="slideNext()"></app-button>
       } @else {
-      <app-button label="Done" fill="clear" (click)="doNavigate()"></app-button>
+        <app-button label="Done" fill="clear" (click)="doNavigate()"></app-button>
       }
     </swiper-slide>
     }

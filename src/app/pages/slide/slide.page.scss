@@ -10,11 +10,12 @@ swiper-slide {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;  
+    position: relative;
 }
 
 app-button {
     position: absolute;
-    bottom: -7px;
-    right: 1px;
+    bottom: 20px;
+    right: 10px;
+    z-index: 10;
 }

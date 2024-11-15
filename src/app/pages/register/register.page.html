@@ -7,8 +7,7 @@
         <ion-col size="12" size-md="8" class="ion-text-center">
           <div class="image-upload-container">
             <div class="image-preview" [style.backgroundImage]="'url(' + imageUrl + ')'">
-              <input type="file" #fileInput (change)="uploadImage($event)" hidden/>
-              <ion-button fill="clear" (click)="fileInput.click()">
+              <ion-button fill="clear" (click)="uploadImage()">
                 <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
               </ion-button>
             </div>
