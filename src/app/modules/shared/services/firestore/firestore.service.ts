@@ -24,6 +24,14 @@ export class FirestoreService {
     }
   }
 
+  public async saveSubCollection(collection: string, documentId: string, subCollection: string, data: any): Promise<void> {
+    try {
+      await this._ngFirestore.collection(collection).doc(documentId).collection(subCollection).add(data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public getCollectionDocuments(collection: string): Observable<any[]> {
     const collectionRef = this._ngFirestore.collection(collection);
 
