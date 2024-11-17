@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 
 @Component({
@@ -6,16 +6,11 @@ import { IonModal } from '@ionic/angular';
   templateUrl: './sheet-modal.component.html',
   styleUrls: ['./sheet-modal.component.scss'],
 })
-export class SheetModalComponent  implements OnInit {
+export class SheetModalComponent {
   @ViewChild(IonModal) modal!: IonModal;
-  constructor() { }
+  @Input() selectedBreed: string = '';
 
-  ngOnInit() {}
-
-  closeModal() {
-    this.modal.dismiss();
+  getModal() {
+    return this.modal;
   }
-
-
-
 }

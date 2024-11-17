@@ -24,6 +24,14 @@ export class FirestoreService {
     }
   }
 
+  public async saveSubCollection(collection: string, documentId: string, subCollection: string, data: any): Promise<void> {
+    try {
+      await this._ngFirestore.collection(collection).doc(documentId).collection(subCollection).add(data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public getCollectionDocuments(collection: string): Observable<any[]> {
     const collectionRef = this._ngFirestore.collection(collection);
 
@@ -54,6 +62,20 @@ export class FirestoreService {
           );
         }
       })
+    );
+  }
+
+  public getDocumentsByQuery(collection: string, field: string, value: any): Observable<any[]> {
+    const collectionRef = this._ngFirestore.collection(collection, ref => ref.where(field, '==', value));
+
+    return collectionRef.snapshotChanges().pipe(
+      map((snapshot) =>
+        snapshot.map((doc) => {
+          const data = doc.payload.doc.data();
+          const id = doc.payload.doc.id;
+          return { id, ...(data ?? {}) };
+        })
+      )
     );
   }
 
