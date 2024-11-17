@@ -2,8 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { Observable } from 'rxjs';
-import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
-import { ICreateVaccine, IVaccine } from 'src/app/interfaces/IVaccine';
+import { FirestoreCollection } from 'src/app/modules/shared/enums/FirestoreCollection';
+import { ICreateVaccine, IVaccine } from 'src/app/modules/shared/interfaces/IVaccine';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { StorageService } from 'src/app/modules/shared/services/storage/storage.service';
 

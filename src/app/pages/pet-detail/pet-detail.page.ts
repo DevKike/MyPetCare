@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
-import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
-import { IPet } from 'src/app/interfaces/IPet';
 import { AlertService } from 'src/app/modules/shared/services/alert/alert.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
 import { take } from 'rxjs/operators';
 import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
+import { IPet } from 'src/app/modules/shared/interfaces/IPet';
+import { FirestoreCollection } from 'src/app/modules/shared/enums/FirestoreCollection';
 
 @Component({
   selector: 'app-pet-detail',
