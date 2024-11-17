@@ -37,16 +37,22 @@
       <app-segment firstOptionLabel="Male" secondOptionLabel="Female"
         (optionChange)="onGenderChange($event)"></app-segment>
 
-      <app-sheet-modal>
-        <app-search-bar (breedSelected)="onBreedSelected($event)" [modal]="modalInstance"></app-search-bar>
-      </app-sheet-modal>
+        <app-sheet-modal #sheetModal [selectedBreed]="breed.value">
+          <app-search-bar
+            (breedSelected)="onBreedSelected($event)"
+            [modal]="sheetModal.getModal()">
+          </app-search-bar>
+        </app-sheet-modal>
 
       <br>
-      <app-button color="dark" label="Breed" id="open-sheet-modal" [expand]="'block'" icon="arrow-forward"
+      <app-button color="dark" [label]="breed.value || 'Breed'" id="open-sheet-modal" [expand]="'block'" icon="arrow-forward"
         [slot]="'end'" [fill]="'clear'"> </app-button>
       <br>
 
-      <app-calendar (dateSelected)="OnDateSelected($event)"></app-calendar>
+      <app-calendar
+  [initialDate]="birthDate.defaultValue"
+  (dateSelected)="OnDateSelected($event)">
+</app-calendar>
 
     </form>
   </app-card-modal>
