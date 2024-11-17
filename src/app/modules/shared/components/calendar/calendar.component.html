@@ -5,9 +5,20 @@
 
 <ion-modal [keepContentsMounted]="true">
   <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="modal.dismiss()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button (click)="modal.dismiss()">Add</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
     <ion-datetime
       id="datetime"
       presentation="date"
+      [value]="initialDate"
       (ionChange)="onDateChange($event)"
       [formatOptions]="{
         date: {
