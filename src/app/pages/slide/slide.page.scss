@@ -15,8 +15,9 @@ swiper-slide {
 
 app-button {
     position: absolute;
-    bottom: -7px;
-    right: 1px;
+    bottom: 20px;
+    right: 10px;
+    z-index: 10;
 }
 
 .slide-content {

@@ -18,12 +18,7 @@ export class TabsComponent implements OnInit {
   public tabs = [
     { name: 'home', title: 'Home', icon: 'home', route: 'home' },
     { name: 'myPets', title: 'My Pets', icon: 'paw', route: 'my-pets' },
-    { name: 'reminder', title: 'Reminders', icon: 'alarm', route: 'reminders' },
-    {
-      name: 'settings',
-      title: 'Settings',
-      icon: 'settings',
-      route: 'settings',
+    { name: 'settings', title: 'Settings', icon: 'settings', route: 'settings',
     },
   ];
 
@@ -37,4 +32,3 @@ export class TabsComponent implements OnInit {
     this._navCtrl.navigateForward(url);
   }
 }
-

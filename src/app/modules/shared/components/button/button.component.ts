@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ButtonColor, ButtonFill, ButtonType } from 'src/app/types/Button';
+import { ButtonColor, ButtonFill, ButtonType } from 'src/app/modules/shared/types/Button';
 import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { NavigationService } from '../../services/navigation/navigation.service'
   styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-  @Input() label: string = 'Button';
+  @Input() label!: string ;
   @Input() type: ButtonType = 'button';
   @Input() disabled: boolean = false;
   @Input() ref!: string;

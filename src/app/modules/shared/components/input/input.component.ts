@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { InputType } from 'src/app/types/Input';
+import { InputType } from 'src/app/modules/shared/types/Input';
 
 @Component({
   selector: 'app-input',

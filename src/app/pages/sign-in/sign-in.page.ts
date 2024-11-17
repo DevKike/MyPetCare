@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
-import { FirebaseError, FirebaseErrorMessage } from 'src/app/enums/FirebaseError';
-import { ToastMessages } from 'src/app/enums/ToastMessage';
-import { IAuthUser } from 'src/app/interfaces/IUser';
+import { FirebaseError, FirebaseErrorMessage } from 'src/app/modules/shared/enums/FirebaseError';
+import { ToastMessages } from 'src/app/modules/shared/enums/ToastMessage';
+import { IAuthUser } from 'src/app/modules/shared/interfaces/IUser';
 import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
 import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
 import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
