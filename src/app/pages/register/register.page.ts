@@ -26,7 +26,6 @@ export class RegisterPage implements OnInit {
   public age!: FormControl;
   public phoneNumber!: FormControl;
   public registerForm!: FormGroup;
-  public uid: string = '';
   protected imageUrl: string = 'https://cdn-icons-png.freepik.com/512/6596/6596121.png';
   protected filePath!: string;
   private fileToUpload: any;

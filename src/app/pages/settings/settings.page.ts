@@ -29,7 +29,7 @@ export class SettingsPage implements OnInit {
 
   protected doNavigate() {
     try {
-      this._navSrv.navigateTo(`/register/${this.userData.id}`);
+      this._navSrv.navigateTo('/profile');
     } catch (error) {
       throw error;
     }
@@ -43,7 +43,7 @@ export class SettingsPage implements OnInit {
         return;
       }
   
-      this.userData = await firstValueFrom( this._firestoreSrv.getDocumentById(FirestoreCollection.USERS, userId));
+      this.userData = await firstValueFrom(this._firestoreSrv.getDocumentById(FirestoreCollection.USERS, userId));
     } catch (error) {
       throw error;
     }

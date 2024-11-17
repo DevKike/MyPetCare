@@ -11,6 +11,6 @@ export interface IUser {
 
 export interface ICreateUser extends Omit<IUser, 'id' | 'email' | 'password'> {}
 
-export interface IUpdateUser extends Partial<Omit<IUser, 'id'>> {}
+export interface IUpdateUser extends Partial<Omit<IUser, 'id' | 'email' | 'password'>> {}
 
 export interface IAuthUser extends Pick<IUser, 'email' | 'password'> {}
