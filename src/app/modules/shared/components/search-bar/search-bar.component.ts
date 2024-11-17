@@ -66,9 +66,9 @@ export class SearchBarComponent implements OnInit {
   }
 
   protected handleItemClick(item: string) {
-    this.breedSelected.emit(item); 
+    this.breedSelected.emit(item);
     if (this.modal) {
-      this.modal.dismiss();
+      this.modal.dismiss(item);
     }
   }
 }
