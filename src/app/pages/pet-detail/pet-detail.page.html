@@ -38,19 +38,23 @@
     <app-segment firstOptionLabel="Male" secondOptionLabel="Female"
       (optionChange)="onGenderChange($event)"></app-segment>
 
-    <app-sheet-modal>
-      <app-search-bar (breedSelected)="onBreedSelected($event)" [modal]="modalInstance"></app-search-bar>
+    <app-sheet-modal #sheetModal [selectedBreed]="breed.value">
+      <app-search-bar (breedSelected)="onBreedSelected($event)" [modal]="sheetModal.getModal()">
+      </app-search-bar>
     </app-sheet-modal>
 
-    <br>
-    <app-button color="dark" label="Breed" id="open-sheet-modal" [expand]="'block'" icon="arrow-forward"
-      [slot]="'end'" [fill]="'clear'"> </app-button>
-    <br>
 
-    <app-calendar (dateSelected)="OnDateSelected($event)"></app-calendar>
+    <br>
+    <app-button color="dark" [label]="breed.value || pet.breed || 'Breed'" id="open-sheet-modal" [expand]="'block'"
+      icon="arrow-forward" [slot]="'end'" [fill]="'clear'">
+    </app-button>
+    <br>
+    <app-calendar [initialDate]="pet.birthDate || ''" (dateSelected)="OnDateSelected($event)">
+    </app-calendar>
 
     <div class="ion-padding-vertical">
-      <app-button label="Save Changes" [disabled]="editForm.invalid" color="primary" expand="block" (click)="savePetDetails()">
+      <app-button label="Save Changes" [disabled]="editForm.invalid" color="primary" expand="block"
+        (click)="savePetDetails()">
       </app-button>
 
       <app-button label="Cancel" color="medium" expand="block" fill="outline" ref="/my-pets">

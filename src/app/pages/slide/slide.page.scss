@@ -10,11 +10,43 @@ swiper-slide {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;  
+    position: relative;
 }
 
 app-button {
     position: absolute;
     bottom: -7px;
     right: 1px;
+}
+
+.slide-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.slide-content img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.slide-content h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 16px 0;
+  color: #ffffff;
+  position: relative;
+  top: -50px;
+}
+
+.slide-content .description {
+  font-size: 1rem;
+  color: #ffffff;
+  margin-top: -50px;
 }

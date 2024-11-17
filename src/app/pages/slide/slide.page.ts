@@ -15,9 +15,21 @@ export class SlidePage implements AfterViewInit {
   swiperInstance?: Swiper;
 
   protected slides = [
-    { text: 'Slide 1 ' },
-    { text: 'Slide 2 ' },
-    { text: 'Slide 3 ' },
+    {
+      title: 'Activity Tracking ',
+      description: 'Manage  your pets ',
+      img: '../../assets/slide1.png',
+    },
+    {
+      title: 'Take control of your pets ',
+      description: 'Add all the pets you want',
+      img: '../../assets/slide2.png',
+    },
+    {
+      title: 'Add your pets medical record ',
+      description: 'save your pets vaccination card',
+      img: '../../assets/slide3.png',
+    },
   ];
 
   constructor(private readonly _navCtrl: NavController) {}

@@ -7,6 +7,8 @@ import { IPet } from 'src/app/interfaces/IPet';
 import { AlertService } from 'src/app/modules/shared/services/alert/alert.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
+import { take } from 'rxjs/operators';
+import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
 
 @Component({
   selector: 'app-pet-detail',
@@ -24,14 +26,15 @@ export class PetDetailPage implements OnInit {
   public imageUrl: string =
     'https://cdn-icons-png.freepik.com/512/6596/6596121.png';
   @ViewChild(IonModal) modalInstance!: IonModal;
+  private isPetDeleted = false;
 
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _firestoreService: FirestoreService,
-    private _toastService: ToastService,
-    private _alertService: AlertService
-
+    private _firestoreSrv: FirestoreService,
+    private _toastSrv: ToastService,
+    private _alertSrv: AlertService,
+    private _loadingSrv: LoadingService
   ) {
     this.initializeForm();
   }
@@ -68,8 +71,9 @@ export class PetDetailPage implements OnInit {
     this.loadPetDetails();
   }
   public async deletePet() {
+
     try {
-      const confirmed = await this._alertService.presentConfirmAlert(
+      const confirmed = await this._alertSrv.presentConfirmAlert(
         'Confirm Delete',
         'Are you sure you want to delete this pet?',
         'Delete',
@@ -80,31 +84,37 @@ export class PetDetailPage implements OnInit {
 
       const petId = this._route.snapshot.paramMap.get('id');
       if (!petId) {
-        this._toastService.showToast('Pet ID not found');
+        this._toastSrv.showToast('Pet ID not found');
         return;
       }
+      await this._loadingSrv.showLoading('Deleting Pet')
+      await this._firestoreSrv.delete(FirestoreCollection.PETS, petId);
+      this.isPetDeleted = true;
 
-      await this._firestoreService.delete(FirestoreCollection.PETS, petId);
-      this._toastService.showToast('Pet deleted successfully');
+      this._toastSrv.showToast('Pet deleted successfully');
+      this._loadingSrv.hideLoading();
       await this._router.navigate(['/my-pets'], { replaceUrl: true });
     } catch (error) {
       console.error('Error deleting pet:', error);
-      this._toastService.showToast('Error deleting pet');
+      this._toastSrv.showToast('Error deleting pet');
     }
   }
 
   private async loadPetDetails() {
+    if (this.isPetDeleted) return;
+
     try {
       const petId = this._route.snapshot.paramMap.get('id');
 
       if (!petId) {
-        this._toastService.showToast('Pet ID not found');
-        this._router.navigate(['/my-pets']);
+        this._toastSrv.showToast('Pet ID not found');
+        await this._router.navigate(['/my-pets']);
         return;
       }
 
-      this._firestoreService
+      this._firestoreSrv
         .getDocumentById(FirestoreCollection.PETS, petId)
+        .pipe(take(1))
         .subscribe(
           (data: IPet) => {
             if (data) {
@@ -117,33 +127,32 @@ export class PetDetailPage implements OnInit {
                 birthDate: data.birthDate,
               });
             } else {
-              this._toastService.showToast('Pet not found');
+              this._toastSrv.showToast('Pet not found');
               this._router.navigate(['/my-pets']);
             }
           },
           (error) => {
             console.error('Error loading pet details:', error);
-            this._toastService.showToast('Error loading pet details');
+            this._toastSrv.showToast('Error loading pet details');
             this._router.navigate(['/my-pets']);
           }
         );
     } catch (error) {
       console.error('Error in loadPetDetails:', error);
-      this._toastService.showToast('Error loading pet details');
-      this._router.navigate(['/my-pets']);
+      this._toastSrv.showToast('Error loading pet details');
+      await this._router.navigate(['/my-pets']);
     }
   }
-
   protected async savePetDetails() {
     try {
       if (this.editForm.invalid) {
-        this._toastService.showToast('Please fill all required fields');
+        this._toastSrv.showToast('Please fill all required fields');
         return;
       }
 
       const petId = this._route.snapshot.paramMap.get('id');
       if (!petId) {
-        this._toastService.showToast('Pet ID not found');
+        this._toastSrv.showToast('Pet ID not found');
         return;
       }
 
@@ -152,16 +161,16 @@ export class PetDetailPage implements OnInit {
         ...this.editForm.value,
       };
 
-      await this._firestoreService.update(
+      await this._firestoreSrv.update(
         FirestoreCollection.PETS,
         petId,
         updatedPet
       );
-      this._toastService.showToast('Pet details updated successfully');
+      this._toastSrv.showToast('Pet details updated successfully');
       await this._router.navigate(['/my-pets'], { replaceUrl: true });
     } catch (error) {
       console.error('Error saving pet details:', error);
-      this._toastService.showToast('Error saving pet details');
+      this._toastSrv.showToast('Error saving pet details');
     }
   }
 }

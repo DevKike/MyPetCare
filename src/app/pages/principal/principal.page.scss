@@ -1,13 +1,78 @@
-.center-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+ion-content {
+  --background: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
 }
 
-ion-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
+.center-row {
+  height: 100%;
 }
+
+app-card {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.welcome-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.welcome-text {
+  font-size: 1rem;
+  color: #bdbdbd;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.or-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.line {
+  flex-grow: 1;
+  height: 1px;
+  background: #bdbdbd;
+  max-width: 100px;
+}
+
+.or-text {
+  font-size: 0.9rem;
+  color: #bdbdbd;
+  text-align: center;
+  margin: 0;
+}
+
+app-button {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  max-width: 300px;
+  margin: 0 auto;
+  border-radius: 25px;
+  padding: 12px;
+  transition: all 0.3s ease;
+}
+
+
+
