@@ -11,6 +11,7 @@ import { take } from 'rxjs/operators';
 import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
 import { CameraService } from 'src/app/modules/shared/services/camera/camera.service';
 import { StorageService } from 'src/app/modules/shared/services/storage/storage.service';
+import { Storage } from 'src/app/modules/shared/enums/Storage';
 
 @Component({
   selector: 'app-pet-detail',
