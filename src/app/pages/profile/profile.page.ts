@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { FirestoreCollection } from 'src/app/modules/shared/enums/FirestoreCollection';
+import { Storage } from 'src/app/modules/shared/enums/Storage';
 import { IUpdateUser } from 'src/app/modules/shared/interfaces/IUser';
 import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
+import { CameraService } from 'src/app/modules/shared/services/camera/camera.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
 import { NavigationService } from 'src/app/modules/shared/services/navigation/navigation.service';
+import { StorageService } from 'src/app/modules/shared/services/storage/storage.service';
 import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
 
 @Component({
@@ -26,10 +29,12 @@ export class ProfilePage implements OnInit {
 
   constructor(
     private readonly _authSrv: AuthService,
-    private readonly _navSrv: NavigationService,
     private readonly _firestoreSrv: FirestoreService,
     private readonly _loadingSrv: LoadingService,
-    private readonly _toastSrv: ToastService
+    private readonly _navSrv: NavigationService,
+    private readonly _toastSrv: ToastService,
+    private readonly _cameraSrv: CameraService,
+    private readonly _storageSrv: StorageService,
   ) {}
 
   async ngOnInit() {
@@ -61,25 +66,35 @@ export class ProfilePage implements OnInit {
 
   protected async doUploadImage() {
     try {
+      const imageUri = await this._cameraSrv.chooseImageSource();
+
+      if (!imageUri) {
+        return;
+      }
+
+      await this._loadingSrv.showLoading('Uploading...');
+
+      this.filePath = `${Storage.IMAGE}${new Date().getTime()}_photo.jpg`;
+      this.fileToUpload = await this._cameraSrv.uriToBlob(imageUri);
+
+      await this._storageSrv.upload(this.filePath, this.fileToUpload);
+
+      this.imageUrl = await this._storageSrv.getUrl(this.filePath);
+
+      await this._toastSrv.showToast('Uploaded with success');
     } catch (error) {
+      await this._toastSrv.showToast('An error ocurred');
       throw error;
+    } finally {
+      await this._loadingSrv.hideLoading();
     }
   }
 
   protected async doSignOut() {
     try {
-      const isAuth = await this._authSrv.isAuth();
-      if (isAuth) {
-        await this._authSrv.singOut();
-        this._navSrv.navigateBack('principal');
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  protected async doDeleteAccount() {
-    try {
+      await this._authSrv.singOut();
+      await this._navSrv.navigateBack('/principal');
+      await this._toastSrv.showToast('Sign out with success');
     } catch (error) {
       throw error;
     }
@@ -109,6 +124,7 @@ export class ProfilePage implements OnInit {
           lastName: userData.lastName,
           age: userData.age,
           phoneNumber: userData.phoneNumber,
+          imageUrl: userData.imageUrl,
         },
         { emitEvent: false }
       );

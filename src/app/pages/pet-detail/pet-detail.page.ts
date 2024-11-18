@@ -10,7 +10,6 @@ import { ToastService } from 'src/app/modules/shared/services/toast/toast.servic
 import { take } from 'rxjs/operators';
 import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
 import { CameraService } from 'src/app/modules/shared/services/camera/camera.service';
-import { Storage } from 'src/app/modules/shared/enums/Storage';
 import { StorageService } from 'src/app/modules/shared/services/storage/storage.service';
 
 @Component({

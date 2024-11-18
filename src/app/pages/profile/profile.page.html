@@ -1,4 +1,4 @@
-<app-header slot="start" href="settings" title="Profile"></app-header>
+<app-header slot="start" href="home" title="Profile"></app-header>
 
 <ion-content>
   <div class="form-container-dark">
@@ -23,11 +23,7 @@
       <br><br>
       <app-button [disabled]="!updateForm.dirty || updateForm.invalid" label="Update" type="submit" expand="block" shape="round"></app-button>
     </form>
+    <br><br>
+    <app-button label="Sign out" color="danger" expand="block" fill="clear" (click)="doSignOut()"></app-button>
   </div>
-    <br><br><br>
-    <app-button label="Sign out" (click)="doSignOut()"></app-button>
-    <br>
-    <app-button label="Delete account" (click)="doDeleteAccount()" fill="clear" expand="block" color="danger"></app-button>
-
-
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ButtonColor, ButtonFill, ButtonType } from 'src/app/modules/shared/types/Button';
+import { ButtonColor, ButtonExpand, ButtonFill, ButtonSlot, ButtonType } from 'src/app/modules/shared/types/Button';
 import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
@@ -14,10 +14,10 @@ export class ButtonComponent {
   @Input() ref!: string;
   @Input() icon?: string;
   @Input() color: ButtonColor = 'primary';
-  @Input() expand!: string;
-  @Input() shape!: string;
+  @Input() expand!: ButtonExpand;
+  @Input() shape: string = 'round';
   @Input() fill: ButtonFill = 'solid';
-  @Input() slot!: 'start' | 'end'
+  @Input() slot!: ButtonSlot;
 
 
   constructor(private readonly _navSrv: NavigationService) {}
