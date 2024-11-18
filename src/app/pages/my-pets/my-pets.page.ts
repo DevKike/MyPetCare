@@ -81,7 +81,7 @@ export class MyPetsPage implements OnInit {
   }
 
   private async loadUserPets() {
-    await this._loadingSrv.showLoading('Cargando mascotas...');
+    await this._loadingSrv.showLoading('Loading pets...');
 
     try {
       const userId = await this._authSrv.getAuthUserId();
@@ -111,16 +111,16 @@ export class MyPetsPage implements OnInit {
 
   protected async doRegister() {
     if (this.registerForm.invalid) {
-      this._toastSrv.showToast('Por favor complete todos los campos correctamente');
+      this._toastSrv.showToast('Please complete all fields correctly.');
       return;
     }
 
     try {
-      await this._loadingSrv.showLoading('Registrando...');
+      await this._loadingSrv.showLoading('Registering...');
 
       const userId = await this._authSrv.getAuthUserId();
       if (!userId) {
-        this._toastSrv.showToast('Usuario no autenticado');
+        this._toastSrv.showToast('Unauthenticated user');
         return;
       }
 
@@ -129,7 +129,7 @@ export class MyPetsPage implements OnInit {
         ...formValues,
         name: this.capitalizeFirstLetter(formValues.name),
         userId,
-        imageUrl: this.imageUrl
+        imageUrl: this.imageUrl,
       };
 
       await this._firestoreSrv.save(FirestoreCollection.PETS, petData);
@@ -142,7 +142,8 @@ export class MyPetsPage implements OnInit {
         await this.modalInstance.dismiss();
       }
 
-      const hasPermission = await this._localNotificationsSrv.checkNotificationPermission();
+      const hasPermission =
+        await this._localNotificationsSrv.checkNotificationPermission();
       if (hasPermission) {
         await this._localNotificationsSrv.scheduleNotification(
           1,
@@ -164,7 +165,7 @@ export class MyPetsPage implements OnInit {
     try {
       const imageUri = await this._cameraSrv.chooseImageSource();
 
-      if (!imageUri) {
+      if (!imageUri || imageUri === 'cancelled') {
         return;
       }
 

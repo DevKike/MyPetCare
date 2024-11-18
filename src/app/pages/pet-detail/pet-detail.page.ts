@@ -138,14 +138,14 @@ export class PetDetailPage implements OnInit {
             }
           },
           (error) => {
-            console.error('Error cargando detalles de la mascota:', error);
-            this._toastSrv.showToast('Error cargando detalles de la mascota');
+            console.error('Error loading pet details:', error);
+            this._toastSrv.showToast('Error loading pet details');
             this._router.navigate(['/my-pets']);
           }
         );
     } catch (error) {
       console.error('Error en loadPetDetails:', error);
-      this._toastSrv.showToast('Error cargando detalles de la mascota');
+      this._toastSrv.showToast('Error loading pet details');
       await this._router.navigate(['/my-pets']);
     }
   }
@@ -167,6 +167,7 @@ export class PetDetailPage implements OnInit {
         ...this.pet,
         ...formValues,
         name: this.capitalizeFirstLetter(formValues.name),
+        imageUrl: this.imageUrl,
       };
 
       await this._firestoreSrv.update(
@@ -186,7 +187,7 @@ export class PetDetailPage implements OnInit {
     try {
       const imageUri = await this._cameraSrv.chooseImageSource();
 
-      if (!imageUri) {
+      if (!imageUri || imageUri === 'cancelled') {
         return;
       }
 
@@ -204,6 +205,20 @@ export class PetDetailPage implements OnInit {
       this.imageUrl = await this._storageSrv.getUrl(filePath);
 
       this.editForm.patchValue({ imageUrl: this.imageUrl });
+
+      const petId = this._route.snapshot.paramMap.get('id');
+      if (petId) {
+        const updatedPet = {
+          ...this.pet,
+          imageUrl: this.imageUrl,
+        };
+        await this._firestoreSrv.update(
+          FirestoreCollection.PETS,
+          petId,
+          updatedPet
+        );
+        this.pet = updatedPet;
+      }
 
       await this._toastSrv.showToast('Imagen actualizada exitosamente');
     } catch (error) {
