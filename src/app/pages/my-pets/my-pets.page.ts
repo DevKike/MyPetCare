@@ -5,11 +5,13 @@ import { IonModal } from '@ionic/angular';
 import { FirestoreCollection } from 'src/app/modules/shared/enums/FirestoreCollection';
 import { ICreatePets } from 'src/app/modules/shared/interfaces/IPet';
 import { AuthService } from 'src/app/modules/shared/services/auth/auth.service';
+import { CameraService } from 'src/app/modules/shared/services/camera/camera.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { LoadingService } from 'src/app/modules/shared/services/loading/loading.service';
 import { LocalNotificationsService } from 'src/app/modules/shared/services/localNotifications/local-notifications.service';
 import { StorageService } from 'src/app/modules/shared/services/storage/storage.service';
 import { ToastService } from 'src/app/modules/shared/services/toast/toast.service';
+import { Storage } from 'src/app/modules/shared/enums/Storage';
 
 @Component({
   selector: 'app-my-pets',
@@ -36,7 +38,8 @@ export class MyPetsPage implements OnInit {
     private readonly _storageSrv: StorageService,
     private readonly _toastSrv: ToastService,
     private readonly _localNotificationsSrv: LocalNotificationsService,
-    private readonly _router: Router
+    private readonly _router: Router,
+    private readonly _cameraSrv: CameraService
   ) {}
 
   ngOnInit() {
@@ -78,7 +81,7 @@ export class MyPetsPage implements OnInit {
   }
 
   private async loadUserPets() {
-    await this._loadingSrv.showLoading('Cargando mascotas...');
+    await this._loadingSrv.showLoading('Loading pets...');
 
     try {
       const userId = await this._authSrv.getAuthUserId();
@@ -108,7 +111,7 @@ export class MyPetsPage implements OnInit {
 
   protected async doRegister() {
     if (this.registerForm.invalid) {
-      this._toastSrv.showToast('Please fill all fields correctly');
+      this._toastSrv.showToast('Please complete all fields correctly.');
       return;
     }
 
@@ -117,30 +120,36 @@ export class MyPetsPage implements OnInit {
 
       const userId = await this._authSrv.getAuthUserId();
       if (!userId) {
-        this._toastSrv.showToast('User not authenticated');
+        this._toastSrv.showToast('Unauthenticated user');
         return;
       }
 
+      const formValues = this.registerForm.value;
       const petData: ICreatePets = {
-        ...this.registerForm.value,
+        ...formValues,
+        name: this.capitalizeFirstLetter(formValues.name),
         userId,
+        imageUrl: this.imageUrl,
       };
 
       await this._firestoreSrv.save(FirestoreCollection.PETS, petData);
 
-      this.petsList.push(petData);
-
       await this._loadingSrv.hideLoading();
       this.registerForm.reset();
+      this.imageUrl = 'https://cdn-icons-png.freepik.com/512/6596/6596121.png';
+
+      if (this.modalInstance) {
+        await this.modalInstance.dismiss();
+      }
 
       const hasPermission =
         await this._localNotificationsSrv.checkNotificationPermission();
       if (hasPermission) {
         await this._localNotificationsSrv.scheduleNotification(
           1,
-          'Registered Pet!',
-          'Your pet has been successfully registered',
-          'Thanks for using our app!',
+          'Mascota Registrada!',
+          'Tu mascota ha sido registrada exitosamente',
+          '¡Gracias por usar nuestra app!',
           '',
           'res://drawable/logo_36',
           'res://drawable/huella_48'
@@ -148,6 +157,47 @@ export class MyPetsPage implements OnInit {
       }
     } catch (error) {
       console.error(error);
+      this._toastSrv.showToast('Error al registrar la mascota');
+    }
+  }
+
+  protected async uploadImage() {
+    try {
+      const imageUri = await this._cameraSrv.chooseImageSource();
+
+      if (!imageUri || imageUri === 'cancelled') {
+        return;
+      }
+
+      await this._loadingSrv.showLoading('Subiendo imagen...');
+
+      const filePath = `${Storage.IMAGE}${new Date().getTime()}_pet.jpg`;
+      const fileToUpload = await this.uriToBlob(imageUri);
+
+      if (!fileToUpload) {
+        this._toastSrv.showToast('Error al procesar la imagen');
+        return;
+      }
+
+      await this._storageSrv.upload(filePath, fileToUpload);
+      this.imageUrl = await this._storageSrv.getUrl(filePath);
+
+      await this._toastSrv.showToast('Imagen subida exitosamente');
+    } catch (error) {
+      console.error('Error al subir imagen:', error);
+      await this._toastSrv.showToast('Error al subir la imagen');
+    } finally {
+      await this._loadingSrv.hideLoading();
+    }
+  }
+
+  private async uriToBlob(uri: string): Promise<Blob | undefined> {
+    try {
+      const response = await fetch(uri);
+      return await response.blob();
+    } catch (error) {
+      console.error('Error al convertir URI a Blob:', error);
+      return undefined;
     }
   }
 
@@ -169,5 +219,10 @@ export class MyPetsPage implements OnInit {
     this.registerForm.valueChanges.subscribe(() => {
       this.isAddButtonDisabled = !this.registerForm.valid;
     });
+  }
+
+  private capitalizeFirstLetter(text: string): string {
+    if (!text) return text;
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   }
 }

@@ -7,14 +7,26 @@
 <ion-content class="ion-padding" [fullscreen]="true">
   <app-tabs></app-tabs>
 
+  <div class="pet-list">
+    <ion-item *ngFor="let pet of petsList" (click)="goToPetDetail(pet.id || '')" button>
+      <ion-thumbnail slot="start">
+        <img [src]="pet.imageUrl || 'https://cdn-icons-png.freepik.com/512/6596/6596121.png'" alt="Pet image">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ pet.name }}</h2>
+        <h2>{{ pet.breed }}</h2>
+      </ion-label>
+    </ion-item>
+  </div>
+
   <app-card-modal headerTitle="Add Pets" (confirmAction)="doRegister()" [disabled]="registerForm.invalid">
     <form [formGroup]="registerForm">
       <ion-row class="ion-justify-content-center">
         <ion-col size="12" size-md="8" class="ion-text-center">
           <div class="image-upload-container">
-            <div class="image-preview" [style.backgroundImage]="'url(' + imageUrl + ')'">
-              <input type="file" #fileInput hidden />
-              <ion-button fill="clear" (click)="fileInput.click()">
+            <div class="image-preview"
+              [style.backgroundImage]="'url(' + (imageUrl || 'https://cdn-icons-png.freepik.com/512/6596/6596121.png') + ')'">
+              <ion-button fill="clear" (click)="uploadImage()">
                 <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
               </ion-button>
             </div>
@@ -37,37 +49,21 @@
       <app-segment firstOptionLabel="Male" secondOptionLabel="Female"
         (optionChange)="onGenderChange($event)"></app-segment>
 
-        <app-sheet-modal #sheetModal [selectedBreed]="breed.value">
-          <app-search-bar
-            (breedSelected)="onBreedSelected($event)"
-            [modal]="sheetModal.getModal()">
-          </app-search-bar>
-        </app-sheet-modal>
+      <app-sheet-modal #sheetModal [selectedBreed]="breed.value">
+        <app-search-bar (breedSelected)="onBreedSelected($event)" [modal]="sheetModal.getModal()">
+        </app-search-bar>
+      </app-sheet-modal>
 
       <br>
-      <app-button color="dark" [label]="breed.value || 'Breed'" id="open-sheet-modal" [expand]="'block'" icon="arrow-forward"
-        [slot]="'end'" [fill]="'clear'"> </app-button>
+      <app-button color="dark" [label]="breed.value || 'Breed'" id="open-sheet-modal" [expand]="'block'"
+        icon="arrow-forward" [slot]="'end'" [fill]="'clear'"> </app-button>
       <br>
 
-      <app-calendar
-  [initialDate]="birthDate.defaultValue"
-  (dateSelected)="OnDateSelected($event)">
-</app-calendar>
+      <app-calendar [initialDate]="birthDate.defaultValue" (dateSelected)="OnDateSelected($event)">
+      </app-calendar>
 
     </form>
   </app-card-modal>
-
-  <ion-item *ngFor="let pet of petsList" (click)="goToPetDetail(pet.id || '')" button>
-    <ion-thumbnail slot="start">
-      <img [src]="pet.imageUrl || imageUrl" alt="Pet image">
-    </ion-thumbnail>
-    <ion-label>
-      <h2>{{ pet.name }}</h2>
-      <h2>{{ pet.breed }}  </h2>
-    </ion-label>
-  </ion-item>
-
-
 
   <ion-fab class="floating-button">
     <ion-fab-button id="open-modal">
