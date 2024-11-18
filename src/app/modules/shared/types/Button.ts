@@ -16,3 +16,5 @@ export type ButtonColor =
 export type ButtonFill = 'solid' | 'clear' | 'outline';
 
 export type ButtonSlot = 'start' | 'end';
+
+export type ButtonExpand = 'block' | 'full';

@@ -109,7 +109,7 @@ export class RegisterPage implements OnInit {
       await this._loadingSrv.showLoading('Uploading...');
 
       this.filePath = `${Storage.IMAGE}${new Date().getTime()}_photo.jpg`;
-      this.fileToUpload = await this.uriToBlob(imageUri);
+      this.fileToUpload = await this._cameraSrv.uriToBlob(imageUri);
 
       await this._storageSrv.upload(this.filePath, this.fileToUpload);
 
@@ -140,14 +140,5 @@ export class RegisterPage implements OnInit {
       age: this.age,
       phoneNumber: this.phoneNumber,
     });
-  }
-
-  private async uriToBlob(uri: string) {
-    try {
-      const res = await fetch(uri);
-      return await res.blob();
-    } catch (error) {
-      return undefined;
-    }
   }
 }
