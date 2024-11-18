@@ -83,4 +83,13 @@ export class CameraService {
 
     return photo.webPath;
   }
+
+  public async uriToBlob(uri: string) {
+    try {
+      const res = await fetch(uri);
+      return await res.blob();
+    } catch (error) {
+      return undefined;
+    }
+  }
 }

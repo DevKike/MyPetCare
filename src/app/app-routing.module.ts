@@ -18,18 +18,18 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'reminders',
-    loadChildren: () => import('./pages/reminders/reminders.module').then( m => m.RemindersPageModule),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'settings',
-    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule),
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'pet-detail/:id',
+    loadChildren: () => import('./pages/pet-detail/pet-detail.module').then( m => m.PetDetailPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'vaccine',
+    loadChildren: () => import('./pages/vaccine/vaccine.module').then( m => m.VaccinePageModule),
     canActivate: [AuthGuard],
   },
   {
@@ -45,22 +45,11 @@ const routes: Routes = [
     path: 'slide',
     loadChildren: () => import('./pages/slide/slide.module').then( m => m.SlidePageModule),
   },
-
-  {
-    path: 'pet-detail/:id',
-    loadChildren: () => import('./pages/pet-detail/pet-detail.module').then( m => m.PetDetailPageModule)
-  },
   {
     path: '**',
     redirectTo: 'slide',
     pathMatch: 'full'
   },
-
-  {
-    path: 'vaccine',
-    loadChildren: () => import('./pages/vaccine/vaccine.module').then( m => m.VaccinePageModule)
-  },
-
 ];
 
 @NgModule({

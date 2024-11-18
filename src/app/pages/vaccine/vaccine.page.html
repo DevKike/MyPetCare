@@ -8,9 +8,14 @@
   <form [formGroup]="vaccineForm" (ngSubmit)="addVaccines(vaccineForm.value)">
     <app-input type="text" label="Name" [control]="name"></app-input>
     <app-input type="date" label="Application Date" [control]="applicationDate"></app-input>
+    <ion-item *ngIf="fileUploaded">
+      <ion-icon name="document-attach" slot="start" color="primary"></ion-icon>
+      <ion-label>{{ fileName }}</ion-label>
+    </ion-item>
   </form>
   <div>
     <app-button [disabled]="vaccineForm.invalid" label="create" type="submit" (click)="addVaccines(vaccineForm.value) "></app-button>
     <app-button label="pdf" type="submit" (click)="pickPDFFiles()"></app-button>
+    <app-button label="open pdf" type="submit" (click)="openPDF()"></app-button>
   </div>
 </ion-content>
