@@ -12,9 +12,8 @@
       <ion-row class="ion-justify-content-center">
         <ion-col size="12" size-md="8" class="ion-text-center">
           <div class="image-upload-container">
-            <div class="image-preview" [style.backgroundImage]="'url(' + imageUrl + ')'">
-              <input type="file" #fileInput hidden />
-              <ion-button fill="clear" (click)="fileInput.click()">
+            <div class="image-preview" [style.backgroundImage]="'url(' + (imageUrl || 'https://cdn-icons-png.freepik.com/512/6596/6596121.png') + ')'">
+              <ion-button fill="clear" (click)="uploadImage()">
                 <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
               </ion-button>
             </div>
@@ -59,11 +58,11 @@
 
   <ion-item *ngFor="let pet of petsList" (click)="goToPetDetail(pet.id || '')" button>
     <ion-thumbnail slot="start">
-      <img [src]="pet.imageUrl || imageUrl" alt="Pet image">
+      <img [src]="pet.imageUrl || 'https://cdn-icons-png.freepik.com/512/6596/6596121.png'" alt="Pet image">
     </ion-thumbnail>
     <ion-label>
       <h2>{{ pet.name }}</h2>
-      <h2>{{ pet.breed }}  </h2>
+      <h2>{{ pet.breed }}</h2>
     </ion-label>
   </ion-item>
 

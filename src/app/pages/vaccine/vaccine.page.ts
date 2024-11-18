@@ -2,8 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { Observable } from 'rxjs';
-import { FirestoreCollection } from 'src/app/enums/FirestoreCollection';
-import { ICreateVaccine, IVaccine } from 'src/app/interfaces/IVaccine';
+import { FirestoreCollection } from 'src/app/modules/shared/enums/FirestoreCollection';
+import { ICreateVaccine, IVaccine } from 'src/app/modules/shared/interfaces/IVaccine';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore/firestore.service';
 import { StorageService } from 'src/app/modules/shared/services/storage/storage.service';
 
@@ -38,7 +38,7 @@ import { StorageService } from 'src/app/modules/shared/services/storage/storage.
 
         if (result && result.files.length > 0) {
           const file = result.files[0];
-          const filePath = `vaccines/${file.name}`; 
+          const filePath = `vaccines/${file.name}`;
 
           await this._storageSrv.upload(filePath, file);
           this.filePath = await this._storageSrv.getUrl(filePath);
@@ -52,9 +52,9 @@ import { StorageService } from 'src/app/modules/shared/services/storage/storage.
       }
     }
 
-    
-    
-    async addVaccines(vaccine: IVaccine, file?: File): Promise<void> { 
+
+
+    async addVaccines(vaccine: IVaccine, file?: File): Promise<void> {
       console.log('Entrando al método addVaccines');
       try {
         const vaccineData: ICreateVaccine = {
@@ -62,7 +62,7 @@ import { StorageService } from 'src/app/modules/shared/services/storage/storage.
           applicationDate: this.vaccineForm.value.applicationDate,
           certificate: this.filePath || null
         }
-    
+
         if (vaccine.id) {
           await this._firestoreSrv.update('vaccines', vaccine.id, vaccine);
         } else {
@@ -72,13 +72,13 @@ import { StorageService } from 'src/app/modules/shared/services/storage/storage.
       } catch(error) {
         console.log('error saving',error)
       }
-    
+
     }
-  
+
     getVaccines(): Observable<IVaccine[]> {
       return this._firestoreSrv.getCollectionDocuments('vaccines');
     }
-  
+
     async deleteVaccines(id: string): Promise<void> {
         await this._firestoreSrv.delete('vaccines', id);
     }
