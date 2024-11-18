@@ -42,15 +42,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pet-detail/pet-detail.module').then( m => m.PetDetailPageModule)
   },
   {
+    path: 'vaccine',
+    loadChildren: () => import('./pages/vaccine/vaccine.module').then( m => m.VaccinePageModule)
+  },
+  {
     path: '**',
     redirectTo: 'slide',
     pathMatch: 'full'
   },
 
-  {
-    path: 'vaccine',
-    loadChildren: () => import('./pages/vaccine/vaccine.module').then( m => m.VaccinePageModule)
-  },
 
 ];
 
