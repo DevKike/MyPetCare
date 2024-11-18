@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Toast } from '@capacitor/toast';
-import { ToastDuration, ToastPosition } from 'src/app/types/Toast';
+import { ToastDuration, ToastPosition } from 'src/app/modules/shared/types/Toast';
 
 @Injectable({
   providedIn: 'root'

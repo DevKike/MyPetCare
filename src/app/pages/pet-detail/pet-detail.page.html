@@ -10,51 +10,55 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="editForm">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-md="8" class="ion-text-center">
-        <div class="image-upload-container">
-          <div class="image-preview" [style.backgroundImage]="'url(' + imageUrl + ')'">
-            <input type="file" #fileInput hidden />
-            <ion-button fill="clear" (click)="fileInput.click()">
-              <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
-            </ion-button>
+  <app-card>
+    <form [formGroup]="editForm">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-md="8" class="ion-text-center">
+          <div class="image-upload-container">
+            <div class="image-preview" [style.backgroundImage]="'url(' + imageUrl + ')'">
+              <ion-button fill="clear" (click)="uploadImage()">
+                <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
           </div>
-        </div>
-      </ion-col>
-    </ion-row>
-    <app-input type="text" label="Name" [control]="name"></app-input>
-    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
-      <small *ngIf="name.errors?.['required']">Name is required.</small>
-    </div>
+        </ion-col>
+      </ion-row>
 
-    <app-input type="number" label="Age" [control]="age"></app-input>
-    <div *ngIf="age.invalid && (age.dirty || age.touched)" class="error-message">
-      <small *ngIf="age.errors?.['required']">Age is required.</small>
-      <small *ngIf="age.errors?.['min']">Age must be a positive number.</small>
-    </div>
+      <app-input type="text" label="Name" [control]="name"></app-input>
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
+        <small *ngIf="name.errors?.['required']">Name is required.</small>
+      </div>
 
-    <br>
-    <app-segment firstOptionLabel="Male" secondOptionLabel="Female"
-      (optionChange)="onGenderChange($event)"></app-segment>
+      <app-input type="number" label="Age" [control]="age"></app-input>
+      <div *ngIf="age.invalid && (age.dirty || age.touched)" class="error-message">
+        <small *ngIf="age.errors?.['required']">Age is required.</small>
+        <small *ngIf="age.errors?.['min']">Age must be a positive number.</small>
+      </div>
 
-    <app-sheet-modal>
-      <app-search-bar (breedSelected)="onBreedSelected($event)" [modal]="modalInstance"></app-search-bar>
-    </app-sheet-modal>
+      <app-segment firstOptionLabel="Male" secondOptionLabel="Female" (optionChange)="onGenderChange($event)">
+      </app-segment>
 
-    <br>
-    <app-button color="dark" label="Breed" id="open-sheet-modal" [expand]="'block'" icon="arrow-forward"
-      [slot]="'end'" [fill]="'clear'"> </app-button>
-    <br>
+      <app-sheet-modal #sheetModal [selectedBreed]="breed.value">
+        <app-search-bar (breedSelected)="onBreedSelected($event)" [modal]="sheetModal.getModal()">
+        </app-search-bar>
+      </app-sheet-modal>
 
-    <app-calendar (dateSelected)="OnDateSelected($event)"></app-calendar>
-
-    <div class="ion-padding-vertical">
-      <app-button label="Save Changes" [disabled]="editForm.invalid" color="primary" expand="block" (click)="savePetDetails()">
+      <br>
+      <app-button color="dark" [label]="breed.value || pet.breed || 'Breed'" id="open-sheet-modal" [expand]="'block'"
+        icon="arrow-forward" [slot]="'end'" [fill]="'clear'">
       </app-button>
+      <br>
 
-      <app-button label="Cancel" color="medium" expand="block" fill="outline" ref="/my-pets">
-      </app-button>
-    </div>
-  </form>
+      <app-calendar [initialDate]="pet.birthDate || ''" (dateSelected)="OnDateSelected($event)">
+      </app-calendar>
+
+      <div class="button-container">
+        <app-button label="Save Changes" [disabled]="editForm.invalid" color="primary" expand="block"
+          (click)="savePetDetails()">
+        </app-button>
+        <app-button label="Cancel" color="medium" expand="block" fill="outline" ref="/my-pets">
+        </app-button>
+      </div>
+    </form>
+  </app-card>
 </ion-content>

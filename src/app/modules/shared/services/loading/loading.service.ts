@@ -8,7 +8,7 @@ export class LoadingService {
   private loading: any;
   constructor(private readonly _loadingCtrl: LoadingController) {}
 
-  public async showLoading(message: string = 'Loading...') {
+  public async showLoading(message?: string) {
     this.loading = await this._loadingCtrl.create({
       message,
       spinner: 'crescent',
