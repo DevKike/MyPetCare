@@ -52,12 +52,11 @@
       <app-calendar [initialDate]="pet.birthDate || ''" (dateSelected)="OnDateSelected($event)">
       </app-calendar>
 
+      <br><br><br>
       <div class="button-container">
-        <app-button label="Save Changes" [disabled]="editForm.invalid" color="primary" expand="block"
-          (click)="savePetDetails()">
-        </app-button>
-        <app-button label="Cancel" color="medium" expand="block" fill="outline" ref="/my-pets">
-        </app-button>
+        <app-button label="Save Changes" [disabled]="editForm.invalid" color="primary" expand="block" (click)="savePetDetails()"></app-button>
+        <app-button label="Add vaccine" color="light" expand="block" ref="vaccine"></app-button>
+        <app-button label="Cancel" color="medium" expand="block" fill="outline" ref="/my-pets"></app-button>
       </div>
     </form>
   </app-card>

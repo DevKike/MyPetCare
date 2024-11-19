@@ -1,8 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>vaccine</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="Add vaccine" slot="start" href="pet-detail"></app-header>
 
 <ion-content [fullscreen]="true">
   <form [formGroup]="vaccineForm" (ngSubmit)="addVaccines(vaccineForm.value)">
@@ -16,6 +12,5 @@
   <div>
     <app-button [disabled]="vaccineForm.invalid" label="create" type="submit" (click)="addVaccines(vaccineForm.value) "></app-button>
     <app-button label="pdf" type="submit" (click)="pickPDFFiles()"></app-button>
-    <app-button label="open pdf" type="submit" (click)="openPDF()"></app-button>
   </div>
 </ion-content>
