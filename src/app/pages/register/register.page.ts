@@ -81,9 +81,9 @@ export class RegisterPage implements OnInit {
       if (hasPermission) {
         await this._localNotificationsSrv.scheduleNotification(
           1,
-          'Registro Existoso',
-          'Te has registrado correctamente en la aplicacion',
-          'Bienvenido a nuestra aplicación',
+          'Successful Registration',
+          'You have successfully registered in the application',
+          'Welcome to our application',
           '',
           'res://drawable/logo_64',
           'res://drawable/huella_48'
