@@ -12,6 +12,7 @@ import { LoadingService } from 'src/app/modules/shared/services/loading/loading.
 import { CameraService } from 'src/app/modules/shared/services/camera/camera.service';
 import { StorageService } from 'src/app/modules/shared/services/storage/storage.service';
 import { Storage } from 'src/app/modules/shared/enums/Storage';
+import { LocalNotificationsService } from 'src/app/modules/shared/services/localNotifications/local-notifications.service';
 
 @Component({
   selector: 'app-pet-detail',
@@ -39,7 +40,8 @@ export class PetDetailPage implements OnInit {
     private _alertSrv: AlertService,
     private _loadingSrv: LoadingService,
     private readonly _cameraSrv: CameraService,
-    private readonly _storageSrv: StorageService
+    private readonly _storageSrv: StorageService,
+    private _localNotificationsSrv: LocalNotificationsService
   ) {
     this.initializeForm();
   }
@@ -95,6 +97,20 @@ export class PetDetailPage implements OnInit {
       await this._firestoreSrv.delete(FirestoreCollection.PETS, petId);
       this.isPetDeleted = true;
 
+      const hasPermission =
+      await this._localNotificationsSrv.checkNotificationPermission();
+    if (hasPermission) {
+      await this._localNotificationsSrv.scheduleNotification(
+        2,
+        'Pet successfully eliminated!',
+        'your pet has been successfully removed',
+        '¡Thank you for using our app!',
+        '',
+        'res://drawable/logo_36',
+        'res://drawable/huella_48'
+      );
+    }
+
       this._toastSrv.showToast('Pet deleted successfully');
       this._loadingSrv.hideLoading();
       await this._router.navigate(['/my-pets'], { replaceUrl: true });
@@ -111,7 +127,7 @@ export class PetDetailPage implements OnInit {
       const petId = this._route.snapshot.paramMap.get('id');
 
       if (!petId) {
-        this._toastSrv.showToast('ID de mascota no encontrado');
+        this._toastSrv.showToast('Pet ID not found');
         await this._router.navigate(['/my-pets']);
         return;
       }
@@ -133,7 +149,7 @@ export class PetDetailPage implements OnInit {
                 imageUrl: data.imageUrl,
               });
             } else {
-              this._toastSrv.showToast('Mascota no encontrada');
+              this._toastSrv.showToast('Pet not found');
               this._router.navigate(['/my-pets']);
             }
           },
@@ -191,13 +207,13 @@ export class PetDetailPage implements OnInit {
         return;
       }
 
-      await this._loadingSrv.showLoading('Actualizando imagen...');
+      await this._loadingSrv.showLoading('Updating image...');
 
       const filePath = `${Storage.IMAGE}${new Date().getTime()}_pet.jpg`;
       const fileToUpload = await this.uriToBlob(imageUri);
 
       if (!fileToUpload) {
-        this._toastSrv.showToast('Error al procesar la imagen');
+        this._toastSrv.showToast('Error processing image');
         return;
       }
 
@@ -220,10 +236,10 @@ export class PetDetailPage implements OnInit {
         this.pet = updatedPet;
       }
 
-      await this._toastSrv.showToast('Imagen actualizada exitosamente');
+      await this._toastSrv.showToast('Image updated successfully');
     } catch (error) {
-      console.error('Error al actualizar imagen:', error);
-      await this._toastSrv.showToast('Error al actualizar la imagen');
+      console.error('Error updating image:', error);
+      await this._toastSrv.showToast('Error updating image');
     } finally {
       await this._loadingSrv.hideLoading();
     }
@@ -234,7 +250,7 @@ export class PetDetailPage implements OnInit {
       const response = await fetch(uri);
       return await response.blob();
     } catch (error) {
-      console.error('Error al convertir URI a Blob:', error);
+      console.error('Error converting URI to Blob:', error);
       return undefined;
     }
   }

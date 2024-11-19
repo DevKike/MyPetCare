@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './modules/shared/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -21,5 +22,14 @@ export class AppComponent implements OnInit {
     } else {
       this._router.navigate(['/slide']);
     }
+
+    this.initializeApp()
   }
+  initializeApp() {
+    SplashScreen.show({
+      showDuration: 5000,
+      autoHide: true,
+    });
+  }
+
 }
