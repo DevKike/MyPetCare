@@ -1,10 +1,16 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-title class="ion-text-center">
+      <ion-text color="primary">PetCare</ion-text>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <app-tabs></app-tabs>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="welcome-container">
+    <h1 class="welcome-title">¡Welcome to PetCare!</h1>
+    <p class="welcome-text">The perfect place to take care of your best friends</p>
+  </div>
 
+  <app-tabs></app-tabs>
 </ion-content>

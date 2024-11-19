@@ -147,9 +147,9 @@ export class MyPetsPage implements OnInit {
       if (hasPermission) {
         await this._localNotificationsSrv.scheduleNotification(
           1,
-          'Mascota Registrada!',
-          'Tu mascota ha sido registrada exitosamente',
-          '¡Gracias por usar nuestra app!',
+          'Registered Pet!',
+          'Your pet has been successfully registered',
+          '¡Thank you for using our app!',
           '',
           'res://drawable/logo_36',
           'res://drawable/huella_48'
@@ -157,7 +157,7 @@ export class MyPetsPage implements OnInit {
       }
     } catch (error) {
       console.error(error);
-      this._toastSrv.showToast('Error al registrar la mascota');
+      this._toastSrv.showToast('Error registering pet');
     }
   }
 
@@ -169,23 +169,23 @@ export class MyPetsPage implements OnInit {
         return;
       }
 
-      await this._loadingSrv.showLoading('Subiendo imagen...');
+      await this._loadingSrv.showLoading('Upload image...');
 
       const filePath = `${Storage.IMAGE}${new Date().getTime()}_pet.jpg`;
       const fileToUpload = await this.uriToBlob(imageUri);
 
       if (!fileToUpload) {
-        this._toastSrv.showToast('Error al procesar la imagen');
+        this._toastSrv.showToast('Error Uploading image');
         return;
       }
 
       await this._storageSrv.upload(filePath, fileToUpload);
       this.imageUrl = await this._storageSrv.getUrl(filePath);
 
-      await this._toastSrv.showToast('Imagen subida exitosamente');
+      await this._toastSrv.showToast('Image upload successfully');
     } catch (error) {
       console.error('Error al subir imagen:', error);
-      await this._toastSrv.showToast('Error al subir la imagen');
+      await this._toastSrv.showToast('Error uploading image');
     } finally {
       await this._loadingSrv.hideLoading();
     }

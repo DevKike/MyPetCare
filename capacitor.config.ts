@@ -11,6 +11,15 @@ const config: CapacitorConfig = {
       iconColor: "#488AFF",
       sound: "beep.wav",
     },
+    SplashScreen: {
+      launchShowDuration: 3000,
+      launchAutoHide: true,
+      backgroundColor: '#ffffff',
+      androidSplashResourceName: 'splash',
+      showSpinner: true, 
+      androidSpinnerStyle: 'horizontal',
+      spinnerColor: '#999999',
+    },
   },
 };
 

@@ -23,7 +23,8 @@ export class ProfilePage implements OnInit {
   public age!: FormControl;
   public phoneNumber!: FormControl;
   public updateForm!: FormGroup;
-  protected imageUrl: string = 'https://cdn-icons-png.freepik.com/512/6596/6596121.png';
+  protected imageUrl: string =
+    'https://cdn-icons-png.freepik.com/512/6596/6596121.png';
   protected filePath!: string;
   private fileToUpload: any;
 
@@ -34,7 +35,7 @@ export class ProfilePage implements OnInit {
     private readonly _navSrv: NavigationService,
     private readonly _toastSrv: ToastService,
     private readonly _cameraSrv: CameraService,
-    private readonly _storageSrv: StorageService,
+    private readonly _storageSrv: StorageService
   ) {}
 
   async ngOnInit() {
@@ -47,14 +48,18 @@ export class ProfilePage implements OnInit {
       await this._loadingSrv.showLoading('Updating...');
 
       const currentUser = await this._authSrv.getAuthUserId();
-      
-      if(!currentUser) {
+
+      if (!currentUser) {
         return;
       }
-      
+
       const updatedData = this.getDirtyValues(this.updateForm);
 
-      await this._firestoreSrv.update(FirestoreCollection.USERS, currentUser, updatedData);
+      await this._firestoreSrv.update(
+        FirestoreCollection.USERS,
+        currentUser,
+        updatedData
+      );
       this.updateForm.markAsPristine();
       await this._toastSrv.showToast('Updated with success');
     } catch (error) {
@@ -72,6 +77,12 @@ export class ProfilePage implements OnInit {
         return;
       }
 
+      const currentUser = await this._authSrv.getAuthUserId();
+
+      if (!currentUser) {
+        return;
+      }
+
       await this._loadingSrv.showLoading('Uploading...');
 
       this.filePath = `${Storage.IMAGE}${new Date().getTime()}_photo.jpg`;
@@ -80,6 +91,9 @@ export class ProfilePage implements OnInit {
       await this._storageSrv.upload(this.filePath, this.fileToUpload);
 
       this.imageUrl = await this._storageSrv.getUrl(this.filePath);
+      await this._firestoreSrv.update(FirestoreCollection.USERS, currentUser, {
+        imageUrl: this.imageUrl,
+      });
 
       await this._toastSrv.showToast('Uploaded with success');
     } catch (error) {
